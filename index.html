@@ -1,0 +1,562 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<!-- Privacy: this policy blocks every network request from scripts (connect-src 'none'),
+     and only allows images/video from the device itself (blob:, data:, mediastream:). -->
+<meta http-equiv="Content-Security-Policy" content="default-src 'none'; script-src 'unsafe-inline'; style-src 'unsafe-inline'; img-src blob: data:; media-src blob: mediastream:; connect-src 'none'; form-action 'none'; base-uri 'none'">
+<title>Side by Side – a private photo journal for Bodywise underarm care</title>
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ctext y='.9em' font-size='90'%3E%F0%9F%AA%9E%3C/text%3E%3C/svg%3E">
+<style>
+:root{
+  color-scheme: light;
+  --paper:#F5F3F8; --surface:#FFFFFF; --ink:#26203A; --ink-soft:#5E5672;
+  --plum:#7A3E6B; --plum-ink:#FFFFFF; --line:#DCD6E3; --sage:#3F6E57; --amber:#94591A;
+  --amber-bg:#FBF1E4; --sage-bg:#E9F2ED; --plum-bg:#F3E8F0;
+  --radius-lg:22px; --radius-sm:10px;
+  --font: ui-rounded, "SF Pro Rounded", "Segoe UI Variable Display", "Segoe UI", system-ui, -apple-system, Roboto, sans-serif;
+}
+@media (prefers-color-scheme: dark){
+  :root:not([data-theme="light"]){
+    color-scheme: dark;
+    --paper:#18151F; --surface:#221E2B; --ink:#EDE8F3; --ink-soft:#B3AABF;
+    --plum:#D79AC6; --plum-ink:#2A1626; --line:#3A3446; --sage:#8CC5A8; --amber:#E7B47A;
+    --amber-bg:#3A2C1C; --sage-bg:#1E3329; --plum-bg:#35243A;
+  }
+}
+*{box-sizing:border-box}
+html{height:100%;-webkit-text-size-adjust:100%}
+body{margin:0;min-height:100%;background:var(--paper);color:var(--ink);font-family:var(--font);font-size:17px;line-height:1.5;
+  padding-top:env(safe-area-inset-top,0px)}
+main{max-width:560px;margin:0 auto;padding:20px 20px calc(110px + env(safe-area-inset-bottom,0px))}
+h1{font-size:clamp(2rem,8vw,2.75rem);line-height:1.08;letter-spacing:-0.02em;font-weight:700;margin:8px 0 14px}
+h2{font-size:1.5rem;line-height:1.2;letter-spacing:-0.01em;margin:4px 0 10px}
+h3{font-size:1.05rem;margin:0 0 6px}
+p{margin:0 0 12px}
+.muted{color:var(--ink-soft)}
+.small{font-size:.88rem}
+a{color:var(--plum)}
+.topbar{display:flex;align-items:center;justify-content:space-between;gap:12px;padding:6px 0 10px}
+.brand{font-weight:700;letter-spacing:-0.01em;display:flex;align-items:center;gap:10px}
+.brand-mark{width:28px;height:28px;border-radius:50%;background:linear-gradient(90deg,var(--plum) 50%,var(--line) 50%)}
+button,.btn{font:inherit;cursor:pointer;border:0;border-radius:999px;padding:13px 20px;font-weight:650;display:inline-flex;align-items:center;justify-content:center;gap:8px;text-decoration:none;min-height:48px}
+.btn-primary{background:var(--plum);color:var(--plum-ink)}
+.btn-quiet{background:transparent;color:var(--ink);border:1.5px solid var(--line)}
+.btn-link{background:none;color:var(--plum);padding:8px 4px;min-height:auto;font-weight:600;text-decoration:underline;text-underline-offset:3px}
+.btn-danger{background:transparent;color:var(--amber);border:1.5px solid currentColor}
+.btn-block{width:100%}
+.row{display:flex;gap:10px;flex-wrap:wrap}
+.stack>*+*{margin-top:12px}
+:focus-visible{outline:3px solid var(--plum);outline-offset:3px}
+.panel{background:var(--surface);border:1px solid var(--line);border-radius:var(--radius-lg);padding:18px}
+.note{border-radius:var(--radius-sm);padding:12px 14px;font-size:.93rem}
+.note-amber{background:var(--amber-bg);color:var(--ink)}
+.note-sage{background:var(--sage-bg);color:var(--ink)}
+.note-plum{background:var(--plum-bg);color:var(--ink)}
+.sample-banner{position:sticky;top:0;z-index:5;background:var(--plum);color:var(--plum-ink);padding:10px 16px;font-size:.92rem;display:flex;justify-content:space-between;align-items:center;gap:10px}
+.sample-banner button{background:var(--plum-ink);color:var(--plum);min-height:36px;padding:6px 14px;font-size:.88rem}
+
+/* Hero: the mirror split is the one memorable element */
+.hero-mirror{position:relative;aspect-ratio:4/3;border-radius:var(--radius-lg);overflow:hidden;margin:6px 0 22px;
+  background:linear-gradient(90deg,#B78C7B 0 50%,#C9A08E 50% 100%)}
+.hero-mirror::after{content:"";position:absolute;inset:0 auto 0 50%;width:3px;transform:translateX(-50%);background:#fff}
+.hero-mirror span{position:absolute;bottom:12px;background:rgba(255,255,255,.88);color:#26203A;border-radius:999px;padding:4px 12px;font-size:.85rem;font-weight:600}
+.hero-mirror .l{left:12px}.hero-mirror .r{right:12px}
+
+.seg{display:inline-flex;background:var(--surface);border:1.5px solid var(--line);border-radius:999px;padding:4px;gap:4px}
+.seg button{min-height:38px;padding:6px 14px;white-space:nowrap;background:transparent;color:var(--ink-soft);font-weight:600}
+.seg button[aria-pressed="true"]{background:var(--ink);color:var(--paper)}
+
+.tips{padding-left:20px;margin:6px 0 0}
+.tips li{margin-bottom:8px}
+
+/* Capture */
+.stage{position:relative;aspect-ratio:3/4;background:#000;border-radius:var(--radius-lg);overflow:hidden}
+.stage video,.stage .ghost,.stage .shot{position:absolute;inset:0;width:100%;height:100%;object-fit:cover}
+.stage .mirror{transform:scaleX(-1)}
+.stage .ghost{pointer-events:none}
+.stage .guide{position:absolute;inset:14% 18%;border:2px dashed rgba(255,255,255,.7);border-radius:50%;pointer-events:none}
+.stage .stage-msg{position:absolute;left:12px;right:12px;top:12px;background:rgba(0,0,0,.55);color:#fff;border-radius:12px;padding:8px 12px;font-size:.85rem}
+.range-row{display:flex;align-items:center;gap:12px}
+.range-row input{flex:1;accent-color:var(--plum)}
+.fallback{border:1.5px dashed var(--line);border-radius:var(--radius-lg);padding:22px;text-align:left}
+label.field{display:block;font-weight:600;margin-bottom:6px}
+input[type=date],textarea,select{font:inherit;color:var(--ink);background:var(--surface);border:1.5px solid var(--line);border-radius:var(--radius-sm);padding:10px 12px;width:100%}
+textarea{min-height:84px;resize:vertical}
+fieldset{border:0;padding:0;margin:0}
+legend{font-weight:600;margin-bottom:6px;padding:0}
+.choice{display:inline-flex;align-items:center;gap:8px;margin-right:18px;min-height:40px}
+.choice input{accent-color:var(--plum);width:20px;height:20px}
+
+/* Journal */
+.entry{display:grid;grid-template-columns:96px 1fr;gap:14px;padding:14px 0;border-bottom:1px solid var(--line)}
+.entry:last-child{border-bottom:0}
+.entry img{width:96px;height:128px;object-fit:cover;border-radius:12px;background:var(--line)}
+.tag{display:inline-block;font-size:.78rem;font-weight:650;border-radius:999px;padding:2px 10px;margin:0 6px 6px 0}
+.tag-amber{background:var(--amber-bg);color:var(--amber)}
+.tag-plum{background:var(--plum-bg);color:var(--plum)}
+.entry .actions{display:flex;gap:4px;flex-wrap:wrap;margin-top:4px}
+.entry .actions .btn-link{font-size:.9rem}
+
+/* Compare */
+.pair{display:grid;grid-template-columns:1fr 1fr;gap:8px}
+.pair figure{margin:0}
+.pair img{width:100%;aspect-ratio:3/4;object-fit:cover;border-radius:14px;display:block;background:var(--line)}
+figcaption{font-size:.85rem;margin-top:6px}
+.slider{position:relative;aspect-ratio:3/4;border-radius:var(--radius-lg);overflow:hidden;background:var(--line);touch-action:none;user-select:none}
+.slider img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;pointer-events:none}
+.slider .top{clip-path:inset(0 calc(100% - var(--pos,50%)) 0 0)}
+.slider .handle{position:absolute;top:0;bottom:0;left:var(--pos,50%);width:3px;background:#fff;transform:translateX(-50%);box-shadow:0 0 0 1px rgba(0,0,0,.15)}
+.slider .handle::after{content:"";position:absolute;top:50%;left:50%;width:34px;height:34px;border-radius:50%;background:#fff;transform:translate(-50%,-50%);box-shadow:0 1px 4px rgba(0,0,0,.25)}
+.slider .chip{position:absolute;top:10px;background:rgba(255,255,255,.9);color:#26203A;border-radius:999px;padding:3px 10px;font-size:.8rem;font-weight:650}
+.slider .chip.a{left:10px}.slider .chip.b{right:10px}
+.grid2{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+
+/* Bottom nav */
+nav.tabs{position:fixed;left:0;right:0;bottom:0;background:var(--surface);border-top:1px solid var(--line);
+  padding:8px 8px calc(8px + env(safe-area-inset-bottom,0px));z-index:10}
+nav.tabs .inner{max-width:560px;margin:0 auto;display:grid;grid-template-columns:repeat(4,1fr);gap:4px}
+nav.tabs a{display:flex;flex-direction:column;align-items:center;gap:2px;text-decoration:none;color:var(--ink-soft);font-size:.78rem;font-weight:600;padding:6px 0;border-radius:12px}
+nav.tabs a[aria-current="page"]{color:var(--plum);background:var(--plum-bg)}
+nav.tabs svg{width:22px;height:22px}
+.toast{position:fixed;left:50%;bottom:calc(86px + env(safe-area-inset-bottom,0px));transform:translateX(-50%);background:var(--ink);color:var(--paper);padding:10px 18px;border-radius:999px;font-weight:600;font-size:.92rem;z-index:20;opacity:0;transition:opacity .2s}
+.toast.show{opacity:1}
+footer.disclaimer{margin-top:28px;font-size:.84rem;color:var(--ink-soft)}
+@media (prefers-reduced-motion: reduce){*{transition:none!important}}
+</style>
+</head>
+<body>
+<div id="banner"></div>
+<main id="view" tabindex="-1"></main>
+<nav class="tabs" aria-label="Main">
+  <div class="inner">
+    <a href="#/journal" data-tab="journal"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><rect x="4" y="3" width="16" height="18" rx="3"/><path d="M8 8h8M8 12h8M8 16h5"/></svg>Journal</a>
+    <a href="#/capture" data-tab="capture"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M4 8h3l2-3h6l2 3h3v11H4z"/><circle cx="12" cy="13" r="3.5"/></svg>Take photo</a>
+    <a href="#/compare" data-tab="compare"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><rect x="3" y="5" width="18" height="14" rx="3"/><path d="M12 3v18"/></svg>Compare</a>
+    <a href="#/privacy" data-tab="privacy"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><rect x="5" y="10" width="14" height="10" rx="2"/><path d="M8 10V7a4 4 0 0 1 8 0v3"/></svg>Privacy</a>
+  </div>
+</nav>
+<div class="toast" id="toast" role="status" aria-live="polite"></div>
+
+<script>
+"use strict";
+/* ============ State ============ */
+const state = {
+  sample:false, side:"left", entries:[], urlCache:new Map(),
+  stream:null, facing:"user", pending:null, cameraOk:null,
+  compareA:null, compareB:null, compareMode:"side", ghostOpacity:0.35,
+  dbError:null
+};
+const SIDES = {left:"Left underarm", right:"Right underarm"};
+
+/* ============ Storage (IndexedDB, on this device only) ============ */
+const DB_NAME = "side-by-side-journal", STORE = "entries";
+let dbPromise = null;
+function openDB(){
+  if (dbPromise) return dbPromise;
+  dbPromise = new Promise((resolve, reject)=>{
+    if (!("indexedDB" in window)) return reject(new Error("no-indexeddb"));
+    const req = indexedDB.open(DB_NAME, 1);
+    req.onupgradeneeded = () => {
+      const db = req.result;
+      if (!db.objectStoreNames.contains(STORE)) db.createObjectStore(STORE, {keyPath:"id"});
+    };
+    req.onsuccess = () => resolve(req.result);
+    req.onerror = () => reject(req.error);
+  });
+  return dbPromise;
+}
+async function dbTx(mode, fn){
+  const db = await openDB();
+  return new Promise((resolve, reject)=>{
+    const tx = db.transaction(STORE, mode);
+    const store = tx.objectStore(STORE);
+    const out = fn(store);
+    tx.oncomplete = () => resolve(out && out.result !== undefined ? out.result : undefined);
+    tx.onerror = () => reject(tx.error);
+    tx.onabort = () => reject(tx.error);
+  });
+}
+const dbAll = () => dbTx("readonly", s => s.getAll());
+const dbPut = (e) => dbTx("readwrite", s => s.put(e));
+const dbDel = (id) => dbTx("readwrite", s => s.delete(id));
+const dbClear = () => dbTx("readwrite", s => s.clear());
+
+/* ============ Helpers ============ */
+const $ = (sel, root=document) => root.querySelector(sel);
+const esc = (s) => String(s ?? "").replace(/[&<>"']/g, c => ({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));
+const todayISO = () => { const d=new Date(); d.setMinutes(d.getMinutes()-d.getTimezoneOffset()); return d.toISOString().slice(0,10); };
+const fmtDate = (iso) => new Date(iso+"T00:00:00").toLocaleDateString("en-IN",{day:"numeric",month:"short",year:"numeric"});
+const daysBetween = (a,b) => Math.round(Math.abs(new Date(b+"T00:00:00") - new Date(a+"T00:00:00"))/86400000);
+const uid = () => (crypto.randomUUID ? crypto.randomUUID() : Date.now().toString(36)+Math.random().toString(36).slice(2));
+function srcFor(e){
+  if (e.src) return e.src; // sample entries carry data: URLs
+  if (!state.urlCache.has(e.id)) state.urlCache.set(e.id, URL.createObjectURL(e.blob));
+  return state.urlCache.get(e.id);
+}
+function forgetUrl(id){ const u=state.urlCache.get(id); if(u){URL.revokeObjectURL(u); state.urlCache.delete(id);} }
+function bySide(side){ return state.entries.filter(e=>e.side===side).sort((a,b)=> a.date===b.date ? a.createdAt-b.createdAt : a.date.localeCompare(b.date)); }
+function toast(msg){ const t=$("#toast"); t.textContent=msg; t.classList.add("show"); clearTimeout(toast._t); toast._t=setTimeout(()=>t.classList.remove("show"),2200); }
+function lsGet(k){ try{return localStorage.getItem(k);}catch{return null;} }
+function lsSet(k,v){ try{localStorage.setItem(k,v);}catch{} }
+
+/* ============ Sample mode (illustrative images, never saved) ============ */
+function makeSampleImage(week, darkness){
+  const c=document.createElement("canvas"); c.width=480; c.height=640;
+  const g=c.getContext("2d");
+  const mix=(a,b,t)=>a.map((v,i)=>Math.round(v+(b[i]-v)*t));
+  const base=[214,176,158], deep=[140,98,84];
+  const bg=g.createLinearGradient(0,0,0,640); bg.addColorStop(0,"rgb(222,188,170)"); bg.addColorStop(1,"rgb(205,166,148)");
+  g.fillStyle=bg; g.fillRect(0,0,480,640);
+  const col=mix(base,deep,darkness);
+  const rg=g.createRadialGradient(240,300,20,240,300,190);
+  rg.addColorStop(0,`rgba(${col.join(",")},1)`); rg.addColorStop(1,`rgba(${col.join(",")},0)`);
+  g.fillStyle=rg; g.beginPath(); g.ellipse(240,300,190,150,0,0,Math.PI*2); g.fill();
+  g.fillStyle="rgba(38,32,58,.78)"; g.fillRect(0,560,480,80);
+  g.fillStyle="#fff"; g.font="600 22px system-ui, sans-serif";
+  g.fillText("Illustrative sample – not a real photo",20,594);
+  g.font="500 18px system-ui, sans-serif"; g.fillText("Week "+week,20,622);
+  return c.toDataURL("image/jpeg",0.85);
+}
+function buildSamples(){
+  const out=[]; const start=new Date(); start.setDate(start.getDate()-42);
+  const plan=[[0,0.85,false,false,"Started using the roll-on."],[2,0.8,true,false,"Slight itching after applying."],[4,0.68,false,false,""],[6,0.6,false,true,"Skipped a few days while travelling."]];
+  for (const side of ["left","right"]){
+    plan.forEach(([w,d,itch,paused,note],i)=>{
+      const dt=new Date(start); dt.setDate(dt.getDate()+w*7);
+      out.push({id:`sample-${side}-${i}`, side, date:dt.toISOString().slice(0,10), createdAt:i, src:makeSampleImage(w, side==="left"?d:d-0.05), itch, paused, note, sample:true});
+    });
+  }
+  return out;
+}
+
+/* ============ Data loading ============ */
+async function loadEntries(){
+  if (state.sample){ state.entries = state._samples || (state._samples = buildSamples()); return; }
+  try { state.entries = await dbAll() || []; state.dbError=null; }
+  catch(err){ state.entries=[]; state.dbError = "This browser isn't letting the app save photos (private browsing can block storage). You can still try sample mode."; }
+}
+
+/* ============ Photo quality tips (guidance only) ============ */
+function photoTips(canvas){
+  const w=160, h=Math.round(canvas.height*160/canvas.width);
+  const c=document.createElement("canvas"); c.width=w; c.height=h;
+  const g=c.getContext("2d",{willReadFrequently:true}); g.drawImage(canvas,0,0,w,h);
+  const d=g.getImageData(0,0,w,h).data; const L=new Float32Array(w*h);
+  let sum=0, hi=0, lo=0;
+  for (let i=0,p=0;i<d.length;i+=4,p++){ const l=0.2126*d[i]+0.7152*d[i+1]+0.0722*d[i+2]; L[p]=l; sum+=l; if(l>248)hi++; if(l<12)lo++; }
+  const n=w*h, mean=sum/n;
+  let lsum=0, lsq=0, cnt=0;
+  for (let y=1;y<h-1;y++) for (let x=1;x<w-1;x++){ const p=y*w+x; const v=4*L[p]-L[p-1]-L[p+1]-L[p-w]-L[p+w]; lsum+=v; lsq+=v*v; cnt++; }
+  const lvar=lsq/cnt-(lsum/cnt)**2;
+  const tips=[];
+  if (mean<60 || lo/n>0.25) tips.push("This photo looks dark. Face your usual window or turn on the same room light, and avoid flash.");
+  if (mean>215 || hi/n>0.12) tips.push("Parts of this photo look washed out. Move out of direct sunlight or away from a bright lamp.");
+  if (lvar<25) tips.push("This photo may be blurry. Hold still or rest your phone against something, then retake.");
+  return tips;
+}
+
+/* ============ Camera ============ */
+function stopCamera(){ if(state.stream){ state.stream.getTracks().forEach(t=>t.stop()); state.stream=null; } }
+async function startCamera(){
+  const video=$("#cam"); if(!video) return;
+  if (!navigator.mediaDevices || !navigator.mediaDevices.getUserMedia || !window.isSecureContext){ state.cameraOk=false; renderCaptureBody(); return; }
+  try{
+    stopCamera();
+    state.stream = await navigator.mediaDevices.getUserMedia({video:{facingMode:state.facing,width:{ideal:1280},height:{ideal:1280}},audio:false});
+    video.srcObject=state.stream; await video.play().catch(()=>{});
+    state.cameraOk=true;
+    video.classList.toggle("mirror", state.facing==="user");
+  }catch(err){ state.cameraOk=false; renderCaptureBody(); }
+}
+function canvasFromSource(src, w, h, flip){
+  const max=1280, scale=Math.min(1, max/Math.max(w,h));
+  const c=document.createElement("canvas"); c.width=Math.round(w*scale); c.height=Math.round(h*scale);
+  const g=c.getContext("2d");
+  if (flip){ g.translate(c.width,0); g.scale(-1,1); }
+  g.drawImage(src,0,0,c.width,c.height);
+  return c;
+}
+function toBlob(canvas){ return new Promise(res=>canvas.toBlob(res,"image/jpeg",0.85)); }
+async function takePhoto(){
+  const v=$("#cam"); if(!v || !v.videoWidth) return;
+  const c=canvasFromSource(v, v.videoWidth, v.videoHeight, state.facing==="user");
+  stopCamera();
+  await setPending(c, todayISO());
+}
+async function fromFile(file){
+  if(!file) return;
+  const url=URL.createObjectURL(file);
+  const img=new Image();
+  img.onload=async ()=>{
+    const c=canvasFromSource(img, img.naturalWidth, img.naturalHeight, false);
+    URL.revokeObjectURL(url); stopCamera();
+    await setPending(c, todayISO());
+  };
+  img.onerror=()=>{ URL.revokeObjectURL(url); toast("That file couldn't be opened as a photo."); };
+  img.src=url;
+}
+async function setPending(canvas, date){
+  const blob=await toBlob(canvas);
+  if (state.pending) URL.revokeObjectURL(state.pending.url);
+  state.pending={blob, url:URL.createObjectURL(blob), tips:photoTips(canvas), date};
+  renderCaptureBody();
+}
+
+/* ============ Views ============ */
+function setBanner(){
+  $("#banner").innerHTML = state.sample
+    ? `<div class="sample-banner" role="note"><span>Sample mode: illustrative images. Nothing here is saved or real.</span><button data-action="exit-sample">Exit sample</button></div>` : "";
+}
+function header(){ return `<div class="topbar"><div class="brand"><span class="brand-mark" aria-hidden="true"></span>Side by Side</div></div>`; }
+const DISCLAIMER = `<footer class="disclaimer">Side by Side is a photo journal, not a medical tool. It doesn't measure pigmentation or tell you whether a product is working. Independent concept built for the Mosaic Fellowship Builder Round; not an official Bodywise app.</footer>`;
+
+function viewHome(){
+  const has = !state.sample && state.entries.length>0;
+  return `${header()}
+  <div class="hero-mirror" aria-hidden="true"><span class="l">Week 1</span><span class="r">Week 6</span></div>
+  <h1>See your underarm care progress side by side</h1>
+  <p class="muted">Slow changes are hard to judge from memory. Take photos the same way each time, then compare any two dates with your own eyes.</p>
+  <div class="stack" style="margin-top:20px">
+    ${has
+      ? `<a class="btn btn-primary btn-block" href="#/capture">Take today's photo</a><a class="btn btn-quiet btn-block" href="#/compare">Compare my photos</a>`
+      : `<button class="btn-primary btn-block" data-action="start-journal">Start my journal</button><button class="btn-quiet btn-block" data-action="start-sample">Try with sample photos</button>`}
+  </div>
+  <div class="note note-plum" style="margin-top:18px">Your photos stay on this device. Nothing is uploaded, and you can delete them anytime.</div>
+  ${state.dbError ? `<div class="note note-amber" style="margin-top:12px">${esc(state.dbError)}</div>`:""}
+  ${has ? `<p style="margin-top:14px"><button class="btn-link" data-action="start-sample">Try with sample photos</button></p>`:""}
+  ${DISCLAIMER}`;
+}
+
+function viewSetup(){
+  return `${header()}
+  <h2>Set up once, so your photos are comparable</h2>
+  <p class="muted">Changes in light and angle can look like changes in skin. These habits keep each photo as similar as possible.</p>
+  <div class="panel">
+    <ul class="tips">
+      <li><strong>Same spot, same light.</strong> Stand facing the same window or under the same room light every time. Avoid flash.</li>
+      <li><strong>Same time of day.</strong> Daylight changes a lot between morning and evening.</li>
+      <li><strong>Same pose.</strong> Raise your arm the same way. From your second photo, a faint copy of your last photo helps you line up.</li>
+      <li><strong>Same side, same camera.</strong> Compare left with left, and use the same phone camera each time.</li>
+    </ul>
+  </div>
+  <p class="small muted" style="margin-top:12px">Even with these habits, photos are never perfectly comparable. Use them as a visual record, not a measurement.</p>
+  <button class="btn-primary btn-block" style="margin-top:12px" data-action="setup-done">Take my first photo</button>`;
+}
+
+function viewCapture(){
+  if (state.sample) return `${header()}<h2>Take a photo</h2><p class="muted">Sample mode doesn't save photos. Exit sample mode to start your own journal.</p><button class="btn-primary" data-action="exit-sample-capture">Exit sample and start my journal</button>`;
+  return `${header()}<h2>Take a photo</h2>
+  <div class="seg" role="group" aria-label="Which side" style="margin-bottom:14px">
+    ${["left","right"].map(s=>`<button data-action="side" data-side="${s}" aria-pressed="${state.side===s}">${SIDES[s]}</button>`).join("")}
+  </div>
+  <div id="capture-body"></div>`;
+}
+function lastFor(side){ const l=bySide(side); return l[l.length-1]; }
+function renderCaptureBody(){
+  const host=$("#capture-body"); if(!host) return;
+  const p=state.pending;
+  if (p){
+    host.innerHTML = `
+    <div class="stage"><img class="shot" src="${p.url}" alt="Photo you just took"></div>
+    <div style="margin-top:12px">
+      ${p.tips.length
+        ? `<div class="note note-amber"><strong>Photo tips</strong><ul class="tips">${p.tips.map(t=>`<li>${esc(t)}</li>`).join("")}</ul></div>`
+        : `<div class="note note-sage">No obvious lighting or focus problems found. These checks are basic tips; they can't confirm two photos are truly comparable.</div>`}
+    </div>
+    <form id="save-form" class="panel stack" style="margin-top:14px" onsubmit="return false">
+      <div><label class="field" for="f-date">Date</label><input type="date" id="f-date" value="${p.date}" max="${todayISO()}" required></div>
+      <fieldset><legend>Any itching or irritation today? <span class="muted small">(optional)</span></legend>
+        <label class="choice"><input type="radio" name="itch" value="no">No</label>
+        <label class="choice"><input type="radio" name="itch" value="yes">Yes</label></fieldset>
+      <fieldset><legend>Paused or skipped use since your last photo? <span class="muted small">(optional)</span></legend>
+        <label class="choice"><input type="radio" name="paused" value="no">No</label>
+        <label class="choice"><input type="radio" name="paused" value="yes">Yes</label></fieldset>
+      <div><label class="field" for="f-note">Notes <span class="muted small">(optional)</span></label>
+        <textarea id="f-note" maxlength="280" placeholder="Anything you noticed, e.g. switched deodorant"></textarea></div>
+    </form>
+    <div class="row" style="margin-top:14px">
+      <button class="btn-primary" style="flex:1" data-action="save">Save to journal</button>
+      <button class="btn-quiet" data-action="retake">Retake</button>
+    </div>`;
+    return;
+  }
+  const last=lastFor(state.side);
+  const camBlock = state.cameraOk===false
+    ? `<div class="fallback"><h3>Camera isn't available here</h3><p class="muted small">It needs your permission and a secure (https) link. You can upload a photo from your gallery instead.</p></div>`
+    : `<div class="stage">
+        <video id="cam" playsinline muted autoplay aria-label="Camera preview"></video>
+        ${last?`<img class="ghost" id="ghost" src="${srcFor(last)}" alt="" style="opacity:${state.ghostOpacity}">`:""}
+        <div class="guide" aria-hidden="true"></div>
+        <div class="stage-msg">${last?`Line up with your last photo from ${fmtDate(last.date)}.`:`First photo for this side. It will become your guide next time.`}</div>
+      </div>
+      ${last?`<div class="range-row" style="margin-top:12px"><label for="ghost-op" class="small">Guide</label><input id="ghost-op" type="range" min="0" max="0.8" step="0.05" value="${state.ghostOpacity}" aria-label="Guide photo visibility"></div>`:""}
+      <div class="row" style="margin-top:12px">
+        <button class="btn-primary" style="flex:1" data-action="shoot">Take photo</button>
+        <button class="btn-quiet" data-action="flip" aria-label="Switch camera">Switch camera</button>
+      </div>`;
+  host.innerHTML = `${camBlock}
+    <label class="btn btn-quiet btn-block" style="margin-top:10px">Upload from gallery<input type="file" accept="image/*" id="file-in" hidden></label>
+    <p class="small muted" style="margin-top:12px">Tip: a photo of the underarm with a little of your arm in frame makes poses easier to match.</p>`;
+  if (state.cameraOk!==false) startCamera();
+}
+
+function itchNotice(list){
+  const recent=list.slice(-3);
+  if (recent.filter(e=>e.itch).length>=2)
+    return `<div class="note note-amber" style="margin-bottom:14px">You've noted itching or irritation in recent entries. This app can't tell why. If it keeps happening, consider pausing use and checking with a dermatologist.</div>`;
+  return "";
+}
+
+function viewJournal(){
+  const list=bySide(state.side).slice().reverse();
+  const tabs=`<div class="seg" role="group" aria-label="Which side" style="margin-bottom:14px">${["left","right"].map(s=>`<button data-action="side" data-side="${s}" aria-pressed="${state.side===s}">${SIDES[s]}</button>`).join("")}</div>`;
+  if (state.dbError && !state.sample) return `${header()}<h2>Journal</h2><div class="note note-amber">${esc(state.dbError)}</div>`;
+  if (!list.length) return `${header()}<h2>Journal</h2>${tabs}
+    <div class="fallback"><h3>No photos for this side yet</h3><p class="muted small">Your first photo becomes the guide for every photo after it.</p>
+    ${state.sample?"":`<a class="btn btn-primary" href="#/capture">Take a photo</a>`}</div>`;
+  return `${header()}<h2>Journal</h2>${tabs}${itchNotice(bySide(state.side))}
+  <div class="panel" style="padding:4px 16px">
+  ${list.map(e=>`<div class="entry">
+      <img src="${srcFor(e)}" alt="${SIDES[e.side]} photo from ${fmtDate(e.date)}">
+      <div>
+        <h3>${fmtDate(e.date)}</h3>
+        ${e.itch?`<span class="tag tag-amber">Itching noted</span>`:""}${e.paused?`<span class="tag tag-plum">Paused use</span>`:""}
+        ${e.note?`<p class="small">${esc(e.note)}</p>`:""}
+        <div class="actions">
+          <button class="btn-link" data-action="compare-with" data-id="${e.id}">Compare</button>
+          ${e.sample?"":`<button class="btn-link" data-action="download" data-id="${e.id}">Download</button><button class="btn-link" data-action="delete" data-id="${e.id}">Delete</button>`}
+        </div>
+      </div></div>`).join("")}
+  </div>`;
+}
+
+function viewCompare(){
+  const list=bySide(state.side);
+  const tabs=`<div class="seg" role="group" aria-label="Which side" style="margin-bottom:14px">${["left","right"].map(s=>`<button data-action="side" data-side="${s}" aria-pressed="${state.side===s}">${SIDES[s]}</button>`).join("")}</div>`;
+  if (list.length<2) return `${header()}<h2>Compare</h2>${tabs}
+    <div class="fallback"><h3>You need two photos of this side to compare</h3><p class="muted small">You have ${list.length}. Come back after your next photo, ideally a week or more later.</p>
+    ${state.sample?"":`<a class="btn btn-primary" href="#/capture">Take a photo</a>`}
+    ${state.sample?"":`<p style="margin-top:10px"><button class="btn-link" data-action="start-sample">Or try with sample photos</button></p>`}</div>`;
+  const ids=list.map(e=>e.id);
+  if (!ids.includes(state.compareA)) state.compareA=list[0].id;
+  if (!ids.includes(state.compareB) || state.compareB===state.compareA) state.compareB=list[list.length-1].id===state.compareA?list[0].id:list[list.length-1].id;
+  let A=list.find(e=>e.id===state.compareA), B=list.find(e=>e.id===state.compareB);
+  if (A.date>B.date) [A,B]=[B,A];
+  const opts=(sel)=>list.map(e=>`<option value="${e.id}" ${e.id===sel?"selected":""}>${fmtDate(e.date)}</option>`).join("");
+  const cap=(e)=>`${fmtDate(e.date)}${e.itch?" · itching noted":""}${e.paused?" · paused use":""}`;
+  const body = state.compareMode==="side"
+    ? `<div class="pair">
+        <figure><img src="${srcFor(A)}" alt="Earlier photo, ${fmtDate(A.date)}"><figcaption>${esc(cap(A))}${A.note?`<br><span class="muted">${esc(A.note)}</span>`:""}</figcaption></figure>
+        <figure><img src="${srcFor(B)}" alt="Later photo, ${fmtDate(B.date)}"><figcaption>${esc(cap(B))}${B.note?`<br><span class="muted">${esc(B.note)}</span>`:""}</figcaption></figure>
+      </div>`
+    : `<div class="slider" id="slider" style="--pos:50%">
+        <img src="${srcFor(B)}" alt="Later photo, ${fmtDate(B.date)}">
+        <img class="top" src="${srcFor(A)}" alt="Earlier photo, ${fmtDate(A.date)}">
+        <div class="handle" aria-hidden="true"></div>
+        <span class="chip a">${fmtDate(A.date)}</span><span class="chip b">${fmtDate(B.date)}</span>
+      </div>
+      <div class="range-row" style="margin-top:10px"><input id="slide" type="range" min="0" max="100" value="50" aria-label="Move the divider between the earlier and later photo"></div>`;
+  return `${header()}<h2>Compare</h2>${tabs}
+  <div class="grid2" style="margin-bottom:12px">
+    <div><label class="field small" for="pickA">Earlier</label><select id="pickA">${opts(A.id)}</select></div>
+    <div><label class="field small" for="pickB">Later</label><select id="pickB">${opts(B.id)}</select></div>
+  </div>
+  <div class="row" style="justify-content:space-between;align-items:center;margin-bottom:12px">
+    <div class="seg" role="group" aria-label="View">
+      <button data-action="mode" data-mode="side" aria-pressed="${state.compareMode==="side"}">Side by side</button>
+      <button data-action="mode" data-mode="slider" aria-pressed="${state.compareMode==="slider"}">Slider</button>
+    </div>
+    <span class="small muted">${daysBetween(A.date,B.date)} days apart</span>
+  </div>
+  ${body}
+  <p class="small muted" style="margin-top:14px">You're the judge here. Differences can come from light, angle or camera as well as skin, so look at a few pairs before drawing conclusions.</p>
+  ${itchNotice(list)}`;
+}
+
+async function viewPrivacy(){
+  let persisted=null; try{ persisted = navigator.storage && navigator.storage.persisted ? await navigator.storage.persisted() : null; }catch{}
+  const count = state.sample ? 0 : state.entries.length;
+  return `${header()}<h2>Privacy and your photos</h2>
+  <div class="panel stack">
+    <p><strong>Your photos stay on this device.</strong> They're saved in this browser's own storage. There's no account and no server, and nothing is uploaded.</p>
+    <p class="small muted">This page's security policy blocks scripts from making network requests, so photos can't be sent anywhere. That covers camera photos, gallery uploads and comparisons.</p>
+    <p><strong>Photos saved:</strong> ${count}</p>
+  </div>
+  <div class="note note-amber" style="margin-top:14px"><strong>Your photos can be lost.</strong> Clearing your browser data, using private or incognito browsing, or switching browser or phone will remove them. Use Download in the journal to keep copies.${persisted===true?" Your browser has agreed to keep this storage unless you clear site data.":""}</div>
+  ${count?`<button class="btn-danger btn-block" style="margin-top:16px" data-action="delete-all">Delete all my photos</button>`:""}
+  ${DISCLAIMER}`;
+}
+
+/* ============ Router ============ */
+const routes = {"":viewHome, home:viewHome, setup:viewSetup, capture:viewCapture, journal:viewJournal, compare:viewCompare, privacy:viewPrivacy};
+async function render(){
+  const route=(location.hash.replace(/^#\/?/,"")||"home").split("?")[0];
+  if (route!=="capture"){ stopCamera(); }
+  setBanner();
+  const view=routes[route]||viewHome;
+  $("#view").innerHTML = await view();
+  document.querySelectorAll("nav.tabs a").forEach(a=>a.setAttribute("aria-current", a.dataset.tab===route?"page":"false"));
+  if (route==="capture" && !state.sample) renderCaptureBody();
+  if (route==="compare") bindCompare();
+  window.scrollTo(0,0);
+}
+window.addEventListener("hashchange", render);
+function go(r){ if (location.hash==="#/"+r) render(); else location.hash="#/"+r; }
+
+/* ============ Interactions ============ */
+function bindCompare(){
+  const a=$("#pickA"), b=$("#pickB");
+  if (a) a.onchange=()=>{ state.compareA=a.value; render(); };
+  if (b) b.onchange=()=>{ state.compareB=b.value; render(); };
+  const s=$("#slider"), r=$("#slide");
+  if (s && r){
+    const set=(v)=>{ v=Math.max(0,Math.min(100,v)); s.style.setProperty("--pos",v+"%"); r.value=v; };
+    r.oninput=()=>set(+r.value);
+    const fromPointer=(e)=>{ const rect=s.getBoundingClientRect(); set((e.clientX-rect.left)/rect.width*100); };
+    s.onpointerdown=(e)=>{ s.setPointerCapture(e.pointerId); fromPointer(e); };
+    s.onpointermove=(e)=>{ if (e.buttons) fromPointer(e); };
+  }
+}
+document.addEventListener("input", (e)=>{
+  if (e.target.id==="ghost-op"){ state.ghostOpacity=+e.target.value; const g=$("#ghost"); if(g) g.style.opacity=state.ghostOpacity; }
+});
+document.addEventListener("change", (e)=>{ if (e.target.id==="file-in") fromFile(e.target.files[0]); });
+document.addEventListener("click", async (e)=>{
+  const el=e.target.closest("[data-action]"); if(!el) return;
+  const a=el.dataset.action;
+  if (a==="start-journal"){ go(lsGet("sbs-setup-done")?"capture":"setup"); }
+  else if (a==="setup-done"){ lsSet("sbs-setup-done","1"); go("capture"); }
+  else if (a==="start-sample"){ state.sample=true; await loadEntries(); state.compareA=state.compareB=null; go("compare"); }
+  else if (a==="exit-sample"||a==="exit-sample-capture"){ state.sample=false; await loadEntries(); state.compareA=state.compareB=null; go(a==="exit-sample-capture" ? (lsGet("sbs-setup-done")?"capture":"setup") : "home"); }
+  else if (a==="side"){ state.side=el.dataset.side; state.compareA=state.compareB=null; if(state.pending){URL.revokeObjectURL(state.pending.url); state.pending=null;} render(); }
+  else if (a==="shoot"){ takePhoto(); }
+  else if (a==="flip"){ state.facing = state.facing==="user"?"environment":"user"; startCamera(); }
+  else if (a==="retake"){ if(state.pending){URL.revokeObjectURL(state.pending.url); state.pending=null;} state.cameraOk=null; renderCaptureBody(); }
+  else if (a==="save"){
+    const p=state.pending; if(!p) return;
+    const date=$("#f-date").value || todayISO();
+    const itch=(document.querySelector('input[name="itch"]:checked')||{}).value==="yes";
+    const paused=(document.querySelector('input[name="paused"]:checked')||{}).value==="yes";
+    const note=$("#f-note").value.trim().slice(0,280);
+    const entry={id:uid(), side:state.side, date, createdAt:Date.now(), blob:p.blob, itch, paused, note};
+    try{
+      await dbPut(entry);
+      try{ if(navigator.storage && navigator.storage.persist) await navigator.storage.persist(); }catch{}
+      URL.revokeObjectURL(p.url); state.pending=null;
+      await loadEntries(); toast("Saved to journal"); go("journal");
+    }catch(err){ toast("Couldn't save. This browser may be blocking storage."); }
+  }
+  else if (a==="compare-with"){ const e2=state.entries.find(x=>x.id===el.dataset.id); const list=bySide(state.side); state.compareB=e2.id; state.compareA=(list[0].id===e2.id && list[1])?list[list.length-1].id:list[0].id; go("compare"); }
+  else if (a==="download"){ const x=state.entries.find(y=>y.id===el.dataset.id); if(!x) return; const link=document.createElement("a"); link.href=srcFor(x); link.download=`side-by-side-${x.side}-${x.date}.jpg`; document.body.appendChild(link); link.click(); link.remove(); }
+  else if (a==="delete"){ if(!confirm("Delete this photo? This can't be undone.")) return; await dbDel(el.dataset.id); forgetUrl(el.dataset.id); await loadEntries(); toast("Photo deleted"); render(); }
+  else if (a==="delete-all"){ if(!confirm("Delete all your photos and notes from this device? This can't be undone.")) return; await dbClear(); [...state.urlCache.keys()].forEach(forgetUrl); await loadEntries(); toast("All photos deleted"); render(); }
+  else if (a==="mode"){ state.compareMode=el.dataset.mode; render(); }
+});
+
+/* ============ Start ============ */
+(async function init(){ await loadEntries(); render(); })();
+</script>
+</body>
+</html>
