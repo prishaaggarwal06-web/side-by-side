@@ -6,23 +6,28 @@
 <!-- Privacy: this policy blocks every network request from scripts (connect-src 'none'),
      and only allows images/video from the device itself (blob:, data:, mediastream:). -->
 <meta http-equiv="Content-Security-Policy" content="default-src 'none'; script-src 'unsafe-inline'; style-src 'unsafe-inline'; img-src blob: data:; media-src blob: mediastream:; connect-src 'none'; form-action 'none'; base-uri 'none'">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-title" content="Side by Side">
+<meta name="apple-mobile-web-app-status-bar-style" content="default">
+<meta name="theme-color" content="#22598F">
 <title>Side by Side – a private photo journal for Be Bodywise underarm care</title>
 <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ctext y='.9em' font-size='90'%3E%F0%9F%AA%9E%3C/text%3E%3C/svg%3E">
 <style>
 :root{
   color-scheme: light;
-  --paper:#F5F3F8; --surface:#FFFFFF; --ink:#26203A; --ink-soft:#5E5672;
-  --plum:#7A3E6B; --plum-ink:#FFFFFF; --line:#DCD6E3; --sage:#3F6E57; --amber:#94591A;
-  --amber-bg:#FBF1E4; --sage-bg:#E9F2ED; --plum-bg:#F3E8F0; --blush:#F6E1EA; --glow:rgba(122,62,107,.10);
+  --paper:#F4F8FC; --surface:#FFFFFF; --ink:#0F1E33; --ink-soft:#4E5D72;
+  --plum:#22598F; --plum-ink:#FFFFFF; --line:#D6E2EF; --sage:#3F6E57; --amber:#94591A;
+  --amber-bg:#FBF1E4; --sage-bg:#E9F2ED; --plum-bg:#E4EFFA; --blush:#E3EEF9; --glow:rgba(34,89,143,.12);
   --radius-lg:22px; --radius-sm:10px;
   --font: ui-rounded, "SF Pro Rounded", "Segoe UI Variable Display", "Segoe UI", system-ui, -apple-system, Roboto, sans-serif;
 }
 @media (prefers-color-scheme: dark){
   :root:not([data-theme="light"]){
     color-scheme: dark;
-    --paper:#18151F; --surface:#221E2B; --ink:#EDE8F3; --ink-soft:#B3AABF;
-    --plum:#D79AC6; --plum-ink:#2A1626; --line:#3A3446; --sage:#8CC5A8; --amber:#E7B47A;
-    --amber-bg:#3A2C1C; --sage-bg:#1E3329; --plum-bg:#35243A; --blush:#2C2030; --glow:rgba(215,154,198,.12);
+    --paper:#0C1522; --surface:#132033; --ink:#E8F0F9; --ink-soft:#A7B6C9;
+    --plum:#8DBBEA; --plum-ink:#0C1F36; --line:#24354D; --sage:#8CC5A8; --amber:#E7B47A;
+    --amber-bg:#3A2C1C; --sage-bg:#1E3329; --plum-bg:#18304D; --blush:#14263D; --glow:rgba(141,187,234,.12);
   }
 }
 *{box-sizing:border-box}
@@ -61,15 +66,15 @@ button,.btn{font:inherit;cursor:pointer;border:0;border-radius:999px;padding:13p
 .for-brand{display:inline-flex;align-items:center;gap:8px;background:var(--surface);border:1px solid var(--line);border-radius:999px;padding:5px 12px 5px 6px;font-size:.86rem;font-weight:600;color:var(--ink-soft);margin:4px 0 14px}
 .for-brand i{width:20px;height:20px;border-radius:50%;background:var(--plum);display:inline-block}
 .hero-demo{position:relative;aspect-ratio:4/3;border-radius:28px;overflow:hidden;margin:4px 0 22px;--pos:50%;
-  box-shadow:0 18px 40px -22px rgba(60,20,50,.45)}
+  box-shadow:0 18px 40px -22px rgba(15,40,75,.45)}
 .hero-demo .pane{position:absolute;inset:0}
 .hero-demo .before{background:radial-gradient(42% 46% at 52% 52%, #8E5F52 0%, rgba(142,95,82,.65) 40%, rgba(142,95,82,0) 75%), linear-gradient(160deg,#D9B3A0,#C69A86)}
 .hero-demo .after{background:radial-gradient(42% 46% at 52% 52%, #B07D6C 0%, rgba(176,125,108,.55) 40%, rgba(176,125,108,0) 75%), linear-gradient(160deg,#DDBBA9,#CBA28F);
   clip-path:inset(0 0 0 var(--pos))}
 .hero-demo .bar{position:absolute;top:0;bottom:0;left:var(--pos);width:3px;background:#fff;transform:translateX(-50%)}
 .hero-demo .bar::after{content:"";position:absolute;top:50%;left:50%;width:38px;height:38px;border-radius:50%;background:#fff;transform:translate(-50%,-50%);
-  box-shadow:0 2px 8px rgba(0,0,0,.25);background-image:linear-gradient(90deg,transparent 44%,#7A3E6B 44% 48%,transparent 48% 52%,#7A3E6B 52% 56%,transparent 56%)}
-.hero-demo .lbl{position:absolute;top:14px;background:rgba(255,255,255,.9);color:#26203A;border-radius:999px;padding:4px 12px;font-size:.82rem;font-weight:650}
+  box-shadow:0 2px 8px rgba(0,0,0,.25);background-image:linear-gradient(90deg,transparent 44%,#22598F 44% 48%,transparent 48% 52%,#22598F 52% 56%,transparent 56%)}
+.hero-demo .lbl{position:absolute;top:14px;background:rgba(255,255,255,.9);color:#0F1E33;border-radius:999px;padding:4px 12px;font-size:.82rem;font-weight:650}
 .hero-demo .lbl.l{left:14px}.hero-demo .lbl.r{right:14px}
 .hero-demo .cap{position:absolute;left:14px;bottom:12px;color:rgba(255,255,255,.92);font-size:.76rem;font-weight:600}
 @media (prefers-reduced-motion: no-preference){
@@ -132,7 +137,7 @@ figcaption{font-size:.85rem;margin-top:6px}
 .slider .top{clip-path:inset(0 calc(100% - var(--pos,50%)) 0 0)}
 .slider .handle{position:absolute;top:0;bottom:0;left:var(--pos,50%);width:3px;background:#fff;transform:translateX(-50%);box-shadow:0 0 0 1px rgba(0,0,0,.15)}
 .slider .handle::after{content:"";position:absolute;top:50%;left:50%;width:34px;height:34px;border-radius:50%;background:#fff;transform:translate(-50%,-50%);box-shadow:0 1px 4px rgba(0,0,0,.25)}
-.slider .chip{position:absolute;top:10px;background:rgba(255,255,255,.9);color:#26203A;border-radius:999px;padding:3px 10px;font-size:.8rem;font-weight:650}
+.slider .chip{position:absolute;top:10px;background:rgba(255,255,255,.9);color:#0F1E33;border-radius:999px;padding:3px 10px;font-size:.8rem;font-weight:650}
 .slider .chip.a{left:10px}.slider .chip.b{right:10px}
 .grid2{display:grid;grid-template-columns:1fr 1fr;gap:10px}
 
@@ -147,6 +152,77 @@ nav.tabs svg{width:22px;height:22px}
 .toast.show{opacity:1}
 footer.disclaimer{margin-top:28px;font-size:.84rem;color:var(--ink-soft)}
 @media (prefers-reduced-motion: reduce){*{transition:none!important}}
+
+.brand small{display:block;font-size:.74rem;font-weight:600;color:var(--ink-soft);margin-top:-2px}
+details.faq{border-bottom:1px solid var(--line);padding:12px 0}
+details.faq:last-child{border-bottom:0}
+details.faq summary{cursor:pointer;font-weight:650;list-style:none;display:flex;justify-content:space-between;gap:12px}
+details.faq summary::-webkit-details-marker{display:none}
+details.faq summary::after{content:"+";color:var(--plum);font-weight:700}
+details.faq[open] summary::after{content:"–"}
+details.faq p{margin:8px 0 0;color:var(--ink-soft);font-size:.94rem}
+.choice-card{border-left:4px solid var(--plum)}
+.section-title{font-size:1.15rem;margin:26px 0 10px}
+.doc-list{padding-left:20px;margin:8px 0 0}
+.doc-list li{margin-bottom:6px}
+.homescreen{border:1.5px solid var(--plum);background:var(--plum-bg);border-radius:20px;padding:16px;margin-bottom:16px}
+.homescreen h3{margin-bottom:4px}
+.homescreen ol{padding-left:20px;margin:8px 0}
+.using{display:inline-flex;align-items:center;gap:8px;background:rgba(255,255,255,.16);border-radius:999px;padding:4px 12px;font-size:.82rem;font-weight:650;margin-top:10px}
+/* Camera-app style capture */
+.cam{position:relative;width:100%;height:clamp(300px, calc(100svh - 300px), 640px);background:#0E0B12;border-radius:26px;overflow:hidden}
+.cam video,.cam .ghost,.cam .shot{position:absolute;inset:0;width:100%;height:100%;object-fit:cover}
+.cam .shot{object-fit:contain}
+.cam .mirror{transform:scaleX(-1)}
+.cam .ghost{pointer-events:none}
+.cam .guide{position:absolute;inset:16% 20% 26%;border:2px dashed rgba(255,255,255,.65);border-radius:50%;pointer-events:none}
+.cam .stage-msg{position:absolute;left:12px;right:12px;top:12px;background:rgba(14,11,18,.55);backdrop-filter:blur(8px);-webkit-backdrop-filter:blur(8px);color:#fff;border-radius:14px;padding:8px 12px;font-size:.84rem}
+.cam-controls{position:absolute;left:0;right:0;bottom:0;padding:40px 18px 16px;display:grid;grid-template-columns:1fr auto 1fr;align-items:end;
+  background:linear-gradient(to top, rgba(14,11,18,.75), rgba(14,11,18,0))}
+.cam-btn{display:flex;flex-direction:column;align-items:center;gap:4px;color:#fff;font-size:.74rem;font-weight:650;background:none;border:0;padding:0;min-height:auto;cursor:pointer}
+.cam-btn .ic{width:50px;height:50px;border-radius:50%;background:rgba(255,255,255,.18);backdrop-filter:blur(6px);-webkit-backdrop-filter:blur(6px);display:grid;place-items:center}
+.cam-btn svg{width:24px;height:24px}
+.cam-controls .left{justify-self:start}.cam-controls .right{justify-self:end}
+.shutter{width:76px;height:76px;border-radius:50%;background:#fff;border:5px solid rgba(255,255,255,.45);background-clip:padding-box;box-shadow:0 0 0 3px #fff inset;padding:0;min-height:auto}
+.shutter:active{transform:scale(.94)}
+.review-bar{display:grid;grid-template-columns:auto 1fr;gap:10px;margin-top:12px}
+.cam-empty{position:absolute;inset:0;display:grid;place-items:center;text-align:center;color:#fff;padding:24px}
+.cam-empty p{color:rgba(255,255,255,.75);font-size:.9rem}
+
+/* Summary cards: one bold colour block per page */
+.summary{background:linear-gradient(135deg,var(--plum),#143A63);color:#fff;border-radius:24px;padding:18px 18px 16px;margin-bottom:16px;position:relative;overflow:hidden}
+.summary::after{content:"";position:absolute;right:-40px;top:-40px;width:160px;height:160px;border-radius:50%;background:rgba(255,255,255,.08)}
+.summary .big{font-size:2rem;font-weight:750;letter-spacing:-0.02em;line-height:1.1}
+.summary .sub{opacity:.85;font-size:.92rem;margin-top:2px}
+.summary .stats{display:flex;gap:18px;margin-top:14px;flex-wrap:wrap}
+.summary .stats div{font-size:.8rem;opacity:.85}
+.summary .stats b{display:block;font-size:1.1rem;opacity:1}
+.summary .cta{margin-top:14px;background:#fff;color:#143A63;min-height:42px;padding:8px 16px;font-size:.95rem}
+@media (prefers-color-scheme: dark){:root:not([data-theme="light"]) .summary{background:linear-gradient(135deg,#1E4E80,#0F2A4A)}}
+.vs{display:flex;align-items:baseline;gap:10px}
+.vs .arrow{opacity:.7;font-size:1.4rem}
+
+/* Wide screens: frame the app so it doesn't float in empty space */
+@media (min-width: 960px){
+  main.home{max-width:1060px;padding:40px 48px 44px}
+  .home-grid{display:grid;grid-template-columns:1.05fr 1fr;gap:48px;align-items:center}
+  .home-grid .hero-demo{margin:0}
+  .home-copy h1{font-size:3rem}
+  .home-copy .stack{display:flex;gap:12px}.home-copy .stack>*+*{margin-top:0}
+  .home-copy .btn-block{width:auto;flex:1}
+  main.home .steps{grid-template-columns:repeat(3,1fr);margin-top:36px}
+}
+@media (min-width: 760px){
+  body{background:
+    radial-gradient(40vw 40vw at 8% 18%, var(--glow), transparent 70%),
+    radial-gradient(45vw 45vw at 95% 85%, var(--glow), transparent 70%),
+    radial-gradient(120% 70% at 50% -10%, var(--blush) 0%, var(--paper) 60%) fixed, var(--paper)}
+  main{background:color-mix(in srgb, var(--surface) 82%, transparent);backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px);
+    border:1px solid var(--line);border-radius:34px;margin:32px auto 130px;padding:28px 32px 36px;box-shadow:0 30px 80px -50px rgba(15,40,75,.5)}
+  nav.tabs{left:50%;right:auto;bottom:18px;transform:translateX(-50%);width:min(560px, calc(100% - 32px));border:1px solid var(--line);border-radius:24px;
+    box-shadow:0 20px 50px -30px rgba(15,40,75,.55);padding:8px}
+  .cam{height:clamp(320px, calc(100vh - 360px), 600px)}
+}
 </style>
 </head>
 <body>
@@ -157,7 +233,7 @@ footer.disclaimer{margin-top:28px;font-size:.84rem;color:var(--ink-soft)}
     <a href="#/journal" data-tab="journal"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><rect x="4" y="3" width="16" height="18" rx="3"/><path d="M8 8h8M8 12h8M8 16h5"/></svg>Journal</a>
     <a href="#/capture" data-tab="capture"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M4 8h3l2-3h6l2 3h3v11H4z"/><circle cx="12" cy="13" r="3.5"/></svg>Take photo</a>
     <a href="#/compare" data-tab="compare"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><rect x="3" y="5" width="18" height="14" rx="3"/><path d="M12 3v18"/></svg>Compare</a>
-    <a href="#/privacy" data-tab="privacy"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><rect x="5" y="10" width="14" height="10" rx="2"/><path d="M8 10V7a4 4 0 0 1 8 0v3"/></svg>Privacy</a>
+    <a href="#/privacy" data-tab="privacy"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="12" cy="12" r="9"/><path d="M9.5 9.5a2.5 2.5 0 1 1 3.5 2.3c-.6.3-1 .8-1 1.5V14"/><circle cx="12" cy="17" r=".6" fill="currentColor"/></svg>Help</a>
   </div>
 </nav>
 <div class="toast" id="toast" role="status" aria-live="polite"></div>
@@ -172,6 +248,10 @@ const state = {
   dbError:null
 };
 const SIDES = {left:"Left underarm", right:"Right underarm"};
+const ICON = {
+  gallery:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="16" rx="3"/><circle cx="9" cy="10" r="2"/><path d="m21 16-5-5-9 9"/></svg>',
+  flip:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 8h3l2-3h6l2 3h3v11H4z"/><path d="M9 13a3 3 0 0 1 5.2-2M15 13a3 3 0 0 1-5.2 2"/><path d="M14 9.5V11h-1.5M10 16.5V15h1.5"/></svg>'
+};
 
 /* ============ Storage (IndexedDB, on this device only) ============ */
 const DB_NAME = "side-by-side-journal", STORE = "entries";
@@ -225,6 +305,28 @@ function toast(msg){ const t=$("#toast"); t.textContent=msg; t.classList.add("sh
 function lsGet(k){ try{return localStorage.getItem(k);}catch{return null;} }
 function lsSet(k,v){ try{localStorage.setItem(k,v);}catch{} }
 
+/* ============ Product context (set by the QR code on the pack, e.g. ?product=roll-on) ============ */
+const PRODUCTS = {"roll-on":"Underarm Roll-On", "roll-on-cream":"Underarm Roll-On + Pigmentation Cream", "other":"Another Be Bodywise product"};
+(function readProductFromLink(){
+  try{ const q=new URLSearchParams(location.search).get("product"); if(q && PRODUCTS[q]) localStorage.setItem("sbs-product", q); }catch{}
+})();
+function productName(){ const k=lsGet("sbs-product"); return k && PRODUCTS[k] ? PRODUCTS[k] : null; }
+function isStandalone(){ try{ return window.matchMedia("(display-mode: standalone)").matches || navigator.standalone===true; }catch{ return false; } }
+function isIOS(){ return /iPhone|iPad|iPod/.test(navigator.userAgent); }
+function homeScreenCard(){
+  if (isStandalone() || state.sample || lsGet("sbs-hs-dismissed")) return "";
+  const ios=isIOS();
+  return `<div class="homescreen" role="note">
+    <h3>Keep your journal safe</h3>
+    <p class="small" style="margin:0">Add Side by Side to your Home Screen. It opens like an app, and your photos are less likely to be cleared by the browser.</p>
+    <ol class="small">${ios
+      ? `<li>Tap the <strong>Share</strong> button in Safari.</li><li>Choose <strong>Add to Home Screen</strong>.</li>`
+      : `<li>Tap the browser menu <strong>⋮</strong>.</li><li>Choose <strong>Add to Home screen</strong> or <strong>Install app</strong>.</li>`}</ol>
+    <p class="small muted" style="margin:0 0 8px">Photos taken before adding stay in the browser, so it's best to add it before your first photo.</p>
+    <button class="btn-link" data-action="hs-dismiss">Got it</button>
+  </div>`;
+}
+
 /* ============ Sample mode (illustrative images, never saved) ============ */
 function makeSampleImage(week, darkness){
   const c=document.createElement("canvas"); c.width=480; c.height=640;
@@ -237,7 +339,7 @@ function makeSampleImage(week, darkness){
   const rg=g.createRadialGradient(240,300,20,240,300,190);
   rg.addColorStop(0,`rgba(${col.join(",")},1)`); rg.addColorStop(1,`rgba(${col.join(",")},0)`);
   g.fillStyle=rg; g.beginPath(); g.ellipse(240,300,190,150,0,0,Math.PI*2); g.fill();
-  g.fillStyle="rgba(38,32,58,.78)"; g.fillRect(0,560,480,80);
+  g.fillStyle="rgba(15,30,51,.78)"; g.fillRect(0,560,480,80);
   g.fillStyle="#fff"; g.font="600 22px system-ui, sans-serif";
   g.fillText("Illustrative sample – not a real photo",20,594);
   g.font="500 18px system-ui, sans-serif"; g.fillText("Week "+week,20,622);
@@ -343,17 +445,18 @@ function setBanner(){
   $("#banner").innerHTML = state.sample
     ? `<div class="sample-banner" role="note"><span>Sample mode: illustrative images. Nothing here is saved or real.</span><button data-action="exit-sample">Exit sample</button></div>` : "";
 }
-function header(){ return `<div class="topbar"><div class="brand"><span class="brand-mark" aria-hidden="true"></span>Side by Side</div></div>`; }
+function header(){ return `<div class="topbar"><div class="brand"><span class="brand-mark" aria-hidden="true"></span><span>Side by Side<small>A Be Bodywise care companion</small></span></div></div>`; }
 const DISCLAIMER = `<footer class="disclaimer">Side by Side is a photo journal, not a medical tool. It doesn't measure pigmentation or tell you whether a product is working. Independent concept built for the Mosaic Fellowship Builder Round; not an official Be Bodywise app.</footer>`;
 
 function viewHome(){
   const has = !state.sample && state.entries.length>0;
   return `${header()}
-  <span class="for-brand"><i aria-hidden="true"></i>For Be Bodywise underarm care</span>
+  <div class="home-grid"><div class="home-art">
   <div class="hero-demo" aria-label="Illustration of the compare slider showing week 1 and week 6" role="img">
     <div class="pane before"></div><div class="pane after"></div><div class="bar"></div>
     <span class="lbl l">Week 1</span><span class="lbl r">Week 6</span><span class="cap">Illustration</span>
-  </div>
+  </div></div><div class="home-copy">
+  <span class="for-brand"><i aria-hidden="true"></i>For Be Bodywise underarm care</span>
   <h1>See your underarm care progress side by side</h1>
   <p class="muted">Using the Be Bodywise underarm roll-on for pigmentation? Results build slowly, which makes them hard to judge from memory. Take photos the same way each time, then compare any two dates with your own eyes.</p>
   <div class="stack" style="margin-top:20px">
@@ -362,6 +465,11 @@ function viewHome(){
       : `<button class="btn-primary btn-block" data-action="start-journal">Start my journal</button><button class="btn-quiet btn-block" data-action="start-sample">Try with sample photos</button>`}
   </div>
   ${has ? `<p style="margin-top:10px"><button class="btn-link" data-action="start-sample">Try with sample photos</button></p>`:""}
+  </div></div>
+  <div class="panel choice-card" style="margin-top:22px">
+    <h3>Your body, your call</h3>
+    <p style="margin:0" class="muted">Darker underarms are natural, common across every skin tone, and nothing to be ashamed of. Caring for them is a choice, never a requirement. If you choose to, this journal helps you see your progress, at your own pace.</p>
+  </div>
   <ol class="steps" aria-label="How it works">
     <li><b class="n">1</b><div><h3>Take a guided photo</h3><p>A faint copy of your last photo helps you match the pose and light.</p></div></li>
     <li><b class="n">2</b><div><h3>Repeat about once a week</h3><p>Add an optional note if you felt itching or paused use.</p></div></li>
@@ -374,6 +482,7 @@ function viewHome(){
 
 function viewSetup(){
   return `${header()}
+  ${homeScreenCard()}
   <h2>Set up once, so your photos are comparable</h2>
   <p class="muted">Keep using your Be Bodywise product as directed on the pack. These habits just keep each photo as similar as possible, because changes in light and angle can look like changes in skin.</p>
   <div class="panel">
@@ -385,13 +494,15 @@ function viewSetup(){
     </ul>
   </div>
   <p class="small muted" style="margin-top:12px">Even with these habits, photos are never perfectly comparable. Use them as a visual record, not a measurement.</p>
+  <div class="panel" style="margin-top:14px"><label class="field" for="f-product">Which Be Bodywise product are you using?</label>
+    <select id="f-product"><option value="">Choose one (optional)</option>${Object.entries(PRODUCTS).map(([k,v])=>`<option value="${k}" ${lsGet("sbs-product")===k?"selected":""}>${v}</option>`).join("")}</select></div>
   <button class="btn-primary btn-block" style="margin-top:12px" data-action="setup-done">Take my first photo</button>`;
 }
 
 function viewCapture(){
   if (state.sample) return `${header()}<h2>Take a photo</h2><p class="muted">Sample mode doesn't save photos. Exit sample mode to start your own journal.</p><button class="btn-primary" data-action="exit-sample-capture">Exit sample and start my journal</button>`;
-  return `${header()}<h2>Take a photo</h2>
-  <div class="seg" role="group" aria-label="Which side" style="margin-bottom:14px">
+  return `<h2 style="margin-top:6px">Take a photo</h2>
+  <div class="seg" role="group" aria-label="Which side" style="margin-bottom:12px">
     ${["left","right"].map(s=>`<button data-action="side" data-side="${s}" aria-pressed="${state.side===s}">${SIDES[s]}</button>`).join("")}
   </div>
   <div id="capture-body"></div>`;
@@ -402,46 +513,47 @@ function renderCaptureBody(){
   const p=state.pending;
   if (p){
     host.innerHTML = `
-    <div class="stage"><img class="shot" src="${p.url}" alt="Photo you just took"></div>
+    <div class="cam"><img class="shot" src="${p.url}" alt="Photo you just took"></div>
+    <div class="review-bar">
+      <button class="btn-quiet" data-action="retake">Retake</button>
+      <button class="btn-primary" data-action="save">Save to journal</button>
+    </div>
     <div style="margin-top:12px">
       ${p.tips.length
         ? `<div class="note note-amber"><strong>Photo tips</strong><ul class="tips">${p.tips.map(t=>`<li>${esc(t)}</li>`).join("")}</ul></div>`
         : `<div class="note note-sage">No obvious lighting or focus problems found. These checks are basic tips; they can't confirm two photos are truly comparable.</div>`}
     </div>
     <form id="save-form" class="panel stack" style="margin-top:14px" onsubmit="return false">
+      <p class="small muted" style="margin:0">Optional notes, saved with this photo</p>
       <div><label class="field" for="f-date">Date</label><input type="date" id="f-date" value="${p.date}" max="${todayISO()}" required></div>
-      <fieldset><legend>Any itching or irritation today? <span class="muted small">(optional)</span></legend>
+      <fieldset><legend>Any itching or irritation today?</legend>
         <label class="choice"><input type="radio" name="itch" value="no">No</label>
         <label class="choice"><input type="radio" name="itch" value="yes">Yes</label></fieldset>
-      <fieldset><legend>Paused or skipped use since your last photo? <span class="muted small">(optional)</span></legend>
+      <fieldset><legend>Paused or skipped use since your last photo?</legend>
         <label class="choice"><input type="radio" name="paused" value="no">No</label>
         <label class="choice"><input type="radio" name="paused" value="yes">Yes</label></fieldset>
-      <div><label class="field" for="f-note">Notes <span class="muted small">(optional)</span></label>
+      <div><label class="field" for="f-note">Notes</label>
         <textarea id="f-note" maxlength="280" placeholder="Anything you noticed, e.g. switched deodorant"></textarea></div>
-    </form>
-    <div class="row" style="margin-top:14px">
-      <button class="btn-primary" style="flex:1" data-action="save">Save to journal</button>
-      <button class="btn-quiet" data-action="retake">Retake</button>
-    </div>`;
+    </form>`;
     return;
   }
   const last=lastFor(state.side);
-  const camBlock = state.cameraOk===false
-    ? `<div class="fallback"><h3>Camera isn't available here</h3><p class="muted small">It needs your permission and a secure (https) link. You can upload a photo from your gallery instead.</p></div>`
-    : `<div class="stage">
-        <video id="cam" playsinline muted autoplay aria-label="Camera preview"></video>
-        ${last?`<img class="ghost" id="ghost" src="${srcFor(last)}" alt="" style="opacity:${state.ghostOpacity}">`:""}
-        <div class="guide" aria-hidden="true"></div>
-        <div class="stage-msg">${last?`Line up with your last photo from ${fmtDate(last.date)}.`:`First photo for this side. It will become your guide next time.`}</div>
-      </div>
-      ${last?`<div class="range-row" style="margin-top:12px"><label for="ghost-op" class="small">Guide</label><input id="ghost-op" type="range" min="0" max="0.8" step="0.05" value="${state.ghostOpacity}" aria-label="Guide photo visibility"></div>`:""}
-      <div class="row" style="margin-top:12px">
-        <button class="btn-primary" style="flex:1" data-action="shoot">Take photo</button>
-        <button class="btn-quiet" data-action="flip" aria-label="Switch camera">Switch camera</button>
-      </div>`;
-  host.innerHTML = `${camBlock}
-    <label class="btn btn-quiet btn-block" style="margin-top:10px">Upload from gallery<input type="file" accept="image/*" id="file-in" hidden></label>
-    <p class="small muted" style="margin-top:12px">Tip: a photo of the underarm with a little of your arm in frame makes poses easier to match.</p>`;
+  const galleryBtn = `<label class="cam-btn left"><span class="ic">${ICON.gallery}</span>Gallery<input type="file" accept="image/*" id="file-in" hidden></label>`;
+  const inner = state.cameraOk===false
+    ? `<div class="cam-empty"><div><h3>Camera isn't available here</h3><p>It needs your permission and a secure (https) link. Upload a photo from your gallery instead.</p></div></div>
+       <div class="cam-controls"><span></span>${galleryBtn.replace('cam-btn left','cam-btn')}<span></span></div>`
+    : `<video id="cam" playsinline muted autoplay aria-label="Camera preview"></video>
+       ${last?`<img class="ghost" id="ghost" src="${srcFor(last)}" alt="" style="opacity:${state.ghostOpacity}">`:""}
+       <div class="guide" aria-hidden="true"></div>
+       <div class="stage-msg">${last?`Line up with your last photo from ${fmtDate(last.date)}.`:`First photo for this side. It will be your guide next time.`}</div>
+       <div class="cam-controls">
+         ${galleryBtn}
+         <button class="shutter" data-action="shoot" aria-label="Take photo"></button>
+         <button class="cam-btn right" data-action="flip" aria-label="Switch camera"><span class="ic">${ICON.flip}</span>Switch</button>
+       </div>`;
+  host.innerHTML = `<div class="cam">${inner}</div>
+    ${last && state.cameraOk!==false ? `<div class="range-row" style="margin-top:12px"><label for="ghost-op" class="small">Guide</label><input id="ghost-op" type="range" min="0" max="0.8" step="0.05" value="${state.ghostOpacity}" aria-label="Guide photo visibility"></div>`:""}
+    <p class="small muted" style="margin-top:10px">Tip: include a little of your arm in frame, so poses are easier to match next time.</p>`;
   if (state.cameraOk!==false) startCamera();
 }
 
@@ -459,7 +571,18 @@ function viewJournal(){
   if (!list.length) return `${header()}<h2>Journal</h2>${tabs}
     <div class="fallback"><div class="empty-art" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M4 8h3l2-3h6l2 3h3v11H4z"/><circle cx="12" cy="13" r="3.5"/></svg></div><h3>No photos for this side yet</h3><p class="muted small">Your first photo becomes the guide for every photo after it.</p>
     ${state.sample?"":`<a class="btn btn-primary" href="#/capture">Take a photo</a>`}</div>`;
-  return `${header()}<h2>Journal</h2>${tabs}${itchNotice(bySide(state.side))}
+  const asc=bySide(state.side), first=asc[0], latest=asc[asc.length-1];
+  const since=daysBetween(latest.date, todayISO());
+  const nextTxt = since>=7 ? "Time for this week's photo" : `Next weekly photo in ${7-since} day${7-since===1?"":"s"}`;
+  const summary = `<div class="summary">
+      <div class="big">Week ${weekOf(latest)}</div>
+      <div class="sub">${SIDES[state.side]}, since ${fmtDate(first.date)}</div>
+      ${productName() && !state.sample ? `<span class="using">Using Be Bodywise ${esc(productName())}</span>`:""}
+      <div class="stats"><div><b>${asc.length}</b>photos</div><div><b>${since===0?"Today":since+"d ago"}</b>last photo</div></div>
+      <div class="sub" style="margin-top:12px">${nextTxt}</div>
+      ${state.sample?"":`<a class="btn cta" href="#/capture">Take a photo</a>`}
+    </div>`;
+  return `${header()}<h2>Journal</h2>${tabs}${summary}${itchNotice(asc)}
   <div class="panel" style="padding:4px 16px">
   ${list.map(e=>`<div class="entry">
       <img src="${srcFor(e)}" alt="${SIDES[e.side]} photo from ${fmtDate(e.date)}">
@@ -501,7 +624,9 @@ function viewCompare(){
         <span class="chip a">Week ${weekOf(A)}</span><span class="chip b">Week ${weekOf(B)}</span>
       </div>
       <div class="range-row" style="margin-top:10px"><input id="slide" type="range" min="0" max="100" value="50" aria-label="Move the divider between the earlier and later photo"></div>`;
-  return `${header()}<h2>Compare</h2>${tabs}
+  const head = `<div class="summary"><div class="vs"><span class="big">Week ${weekOf(A)}</span><span class="arrow">→</span><span class="big">Week ${weekOf(B)}</span></div>
+      <div class="sub">${daysBetween(A.date,B.date)} days apart. Look closely at tone and texture, and remember light and angle can differ.</div></div>`;
+  return `${header()}<h2>Compare</h2>${tabs}${head}
   <div class="grid2" style="margin-bottom:12px">
     <div><label class="field small" for="pickA">Earlier</label><select id="pickA">${opts(A.id)}</select></div>
     <div><label class="field small" for="pickB">Later</label><select id="pickB">${opts(B.id)}</select></div>
@@ -511,7 +636,6 @@ function viewCompare(){
       <button data-action="mode" data-mode="side" aria-pressed="${state.compareMode==="side"}">Side by side</button>
       <button data-action="mode" data-mode="slider" aria-pressed="${state.compareMode==="slider"}">Slider</button>
     </div>
-    <span class="small muted">${daysBetween(A.date,B.date)} days apart</span>
   </div>
   ${body}
   <p class="small muted" style="margin-top:14px">You're the judge here. Differences can come from light, angle or camera as well as skin, so look at a few pairs before drawing conclusions.</p>
@@ -521,7 +645,42 @@ function viewCompare(){
 async function viewPrivacy(){
   let persisted=null; try{ persisted = navigator.storage && navigator.storage.persisted ? await navigator.storage.persisted() : null; }catch{}
   const count = state.sample ? 0 : state.entries.length;
-  return `${header()}<h2>Privacy and your photos</h2>
+  return `${header()}<h2>Help and privacy</h2>
+  ${homeScreenCard()}
+
+  <h3 class="section-title">When to see a doctor</h3>
+  <div class="panel">
+    <p style="margin:0">This app can't tell you why your skin looks or feels the way it does. Stop using the product and see a dermatologist or doctor if you notice:</p>
+    <ul class="doc-list">
+      <li>Itching, burning, redness or a rash that doesn't settle after you stop the product.</li>
+      <li>Broken, cracked, oozing or painful skin.</li>
+      <li>Darkening that appears suddenly, spreads quickly, or feels thick or velvety.</li>
+      <li>Similar darkening in other skin folds, such as the neck, or alongside other health changes. This can sometimes be linked to an underlying condition worth checking.</li>
+      <li>A lump or swelling in your underarm. Get this checked promptly.</li>
+    </ul>
+  </div>
+
+  <h3 class="section-title">Using your roll-on</h3>
+  <div class="panel">
+    <p style="margin:0">Always follow the directions on your own pack. Be Bodywise roll-on listings advise:</p>
+    <ul class="doc-list">
+      <li>Doing a patch test before first use.</li>
+      <li>Applying to clean, dry underarm skin and letting it dry fully.</li>
+      <li>Avoiding broken or freshly shaved skin.</li>
+    </ul>
+    <p class="small muted" style="margin:8px 0 0">If you get itching, the journal's "itching" note lets you look back at when it happened.</p>
+  </div>
+
+  <h3 class="section-title">Questions</h3>
+  <div class="panel" style="padding:4px 18px">
+    <details class="faq"><summary>Can the app tell me if my pigmentation is improving?</summary><p>No. Photos are affected by light, angle and camera, so the app doesn't score your skin. It helps you take consistent photos and compare them yourself, instead of relying on memory.</p></details>
+    <details class="faq"><summary>How often should I take a photo?</summary><p>About once a week, at the same time of day and in the same spot. Daily photos change too little to compare.</p></details>
+    <details class="faq"><summary>Why compare left and right separately?</summary><p>Each side can look different and respond differently, so like-for-like comparisons are fairer.</p></details>
+    <details class="faq"><summary>What if I stop using the product?</summary><p>Keep taking weekly photos and tick "paused use". You'll be able to see for yourself what changes when you stop and restart.</p></details>
+    <details class="faq"><summary>Is this an official Be Bodywise app?</summary><p>No. It's an independent concept built for the Mosaic Fellowship Builder Round, based on conversations with Be Bodywise customers.</p></details>
+  </div>
+
+  <h3 class="section-title">Your photos</h3>
   <div class="panel stack">
     <p><strong>Your photos stay on this device.</strong> They're saved in this browser's own storage. There's no account and no server, and nothing is uploaded.</p>
     <p class="small muted">This page's security policy blocks scripts from making network requests, so photos can't be sent anywhere. That covers camera photos, gallery uploads and comparisons.</p>
@@ -539,6 +698,7 @@ async function render(){
   if (route!=="capture"){ stopCamera(); }
   setBanner();
   const view=routes[route]||viewHome;
+  $("#view").classList.toggle("home", view===viewHome);
   $("#view").innerHTML = await view();
   document.querySelectorAll("nav.tabs a").forEach(a=>a.setAttribute("aria-current", a.dataset.tab===route?"page":"false"));
   if (route==="capture" && !state.sample) renderCaptureBody();
@@ -570,7 +730,8 @@ document.addEventListener("click", async (e)=>{
   const el=e.target.closest("[data-action]"); if(!el) return;
   const a=el.dataset.action;
   if (a==="start-journal"){ go(lsGet("sbs-setup-done")?"capture":"setup"); }
-  else if (a==="setup-done"){ lsSet("sbs-setup-done","1"); go("capture"); }
+  else if (a==="setup-done"){ const f=$("#f-product"); if(f && f.value) lsSet("sbs-product", f.value); lsSet("sbs-setup-done","1"); go("capture"); }
+  else if (a==="hs-dismiss"){ lsSet("sbs-hs-dismissed","1"); render(); }
   else if (a==="start-sample"){ state.sample=true; await loadEntries(); state.compareA=state.compareB=null; go("compare"); }
   else if (a==="exit-sample"||a==="exit-sample-capture"){ state.sample=false; await loadEntries(); state.compareA=state.compareB=null; go(a==="exit-sample-capture" ? (lsGet("sbs-setup-done")?"capture":"setup") : "home"); }
   else if (a==="side"){ state.side=el.dataset.side; state.compareA=state.compareB=null; if(state.pending){URL.revokeObjectURL(state.pending.url); state.pending=null;} render(); }
