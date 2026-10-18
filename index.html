@@ -6,14 +6,14 @@
 <!-- Privacy: this policy blocks every network request from scripts (connect-src 'none'),
      and only allows images/video from the device itself (blob:, data:, mediastream:). -->
 <meta http-equiv="Content-Security-Policy" content="default-src 'none'; script-src 'unsafe-inline'; style-src 'unsafe-inline'; img-src blob: data:; media-src blob: mediastream:; connect-src 'none'; form-action 'none'; base-uri 'none'">
-<title>Side by Side – a private photo journal for Bodywise underarm care</title>
+<title>Side by Side – a private photo journal for Be Bodywise underarm care</title>
 <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ctext y='.9em' font-size='90'%3E%F0%9F%AA%9E%3C/text%3E%3C/svg%3E">
 <style>
 :root{
   color-scheme: light;
   --paper:#F5F3F8; --surface:#FFFFFF; --ink:#26203A; --ink-soft:#5E5672;
   --plum:#7A3E6B; --plum-ink:#FFFFFF; --line:#DCD6E3; --sage:#3F6E57; --amber:#94591A;
-  --amber-bg:#FBF1E4; --sage-bg:#E9F2ED; --plum-bg:#F3E8F0;
+  --amber-bg:#FBF1E4; --sage-bg:#E9F2ED; --plum-bg:#F3E8F0; --blush:#F6E1EA; --glow:rgba(122,62,107,.10);
   --radius-lg:22px; --radius-sm:10px;
   --font: ui-rounded, "SF Pro Rounded", "Segoe UI Variable Display", "Segoe UI", system-ui, -apple-system, Roboto, sans-serif;
 }
@@ -22,12 +22,12 @@
     color-scheme: dark;
     --paper:#18151F; --surface:#221E2B; --ink:#EDE8F3; --ink-soft:#B3AABF;
     --plum:#D79AC6; --plum-ink:#2A1626; --line:#3A3446; --sage:#8CC5A8; --amber:#E7B47A;
-    --amber-bg:#3A2C1C; --sage-bg:#1E3329; --plum-bg:#35243A;
+    --amber-bg:#3A2C1C; --sage-bg:#1E3329; --plum-bg:#35243A; --blush:#2C2030; --glow:rgba(215,154,198,.12);
   }
 }
 *{box-sizing:border-box}
 html{height:100%;-webkit-text-size-adjust:100%}
-body{margin:0;min-height:100%;background:var(--paper);color:var(--ink);font-family:var(--font);font-size:17px;line-height:1.5;
+body{margin:0;min-height:100%;background:radial-gradient(120% 60% at 50% -10%, var(--blush) 0%, var(--paper) 60%) no-repeat, var(--paper);color:var(--ink);font-family:var(--font);font-size:17px;line-height:1.5;
   padding-top:env(safe-area-inset-top,0px)}
 main{max-width:560px;margin:0 auto;padding:20px 20px calc(110px + env(safe-area-inset-bottom,0px))}
 h1{font-size:clamp(2rem,8vw,2.75rem);line-height:1.08;letter-spacing:-0.02em;font-weight:700;margin:8px 0 14px}
@@ -49,7 +49,7 @@ button,.btn{font:inherit;cursor:pointer;border:0;border-radius:999px;padding:13p
 .row{display:flex;gap:10px;flex-wrap:wrap}
 .stack>*+*{margin-top:12px}
 :focus-visible{outline:3px solid var(--plum);outline-offset:3px}
-.panel{background:var(--surface);border:1px solid var(--line);border-radius:var(--radius-lg);padding:18px}
+.panel{background:var(--surface);border:1px solid var(--line);border-radius:var(--radius-lg);padding:18px;box-shadow:0 10px 30px -24px var(--glow)}
 .note{border-radius:var(--radius-sm);padding:12px 14px;font-size:.93rem}
 .note-amber{background:var(--amber-bg);color:var(--ink)}
 .note-sage{background:var(--sage-bg);color:var(--ink)}
@@ -57,13 +57,36 @@ button,.btn{font:inherit;cursor:pointer;border:0;border-radius:999px;padding:13p
 .sample-banner{position:sticky;top:0;z-index:5;background:var(--plum);color:var(--plum-ink);padding:10px 16px;font-size:.92rem;display:flex;justify-content:space-between;align-items:center;gap:10px}
 .sample-banner button{background:var(--plum-ink);color:var(--plum);min-height:36px;padding:6px 14px;font-size:.88rem}
 
-/* Hero: the mirror split is the one memorable element */
-.hero-mirror{position:relative;aspect-ratio:4/3;border-radius:var(--radius-lg);overflow:hidden;margin:6px 0 22px;
-  background:linear-gradient(90deg,#B78C7B 0 50%,#C9A08E 50% 100%)}
-.hero-mirror::after{content:"";position:absolute;inset:0 auto 0 50%;width:3px;transform:translateX(-50%);background:#fff}
-.hero-mirror span{position:absolute;bottom:12px;background:rgba(255,255,255,.88);color:#26203A;border-radius:999px;padding:4px 12px;font-size:.85rem;font-weight:600}
-.hero-mirror .l{left:12px}.hero-mirror .r{right:12px}
-
+/* Hero: a live demo of the compare slider is the one memorable element */
+.for-brand{display:inline-flex;align-items:center;gap:8px;background:var(--surface);border:1px solid var(--line);border-radius:999px;padding:5px 12px 5px 6px;font-size:.86rem;font-weight:600;color:var(--ink-soft);margin:4px 0 14px}
+.for-brand i{width:20px;height:20px;border-radius:50%;background:var(--plum);display:inline-block}
+.hero-demo{position:relative;aspect-ratio:4/3;border-radius:28px;overflow:hidden;margin:4px 0 22px;--pos:50%;
+  box-shadow:0 18px 40px -22px rgba(60,20,50,.45)}
+.hero-demo .pane{position:absolute;inset:0}
+.hero-demo .before{background:radial-gradient(42% 46% at 52% 52%, #8E5F52 0%, rgba(142,95,82,.65) 40%, rgba(142,95,82,0) 75%), linear-gradient(160deg,#D9B3A0,#C69A86)}
+.hero-demo .after{background:radial-gradient(42% 46% at 52% 52%, #B07D6C 0%, rgba(176,125,108,.55) 40%, rgba(176,125,108,0) 75%), linear-gradient(160deg,#DDBBA9,#CBA28F);
+  clip-path:inset(0 0 0 var(--pos))}
+.hero-demo .bar{position:absolute;top:0;bottom:0;left:var(--pos);width:3px;background:#fff;transform:translateX(-50%)}
+.hero-demo .bar::after{content:"";position:absolute;top:50%;left:50%;width:38px;height:38px;border-radius:50%;background:#fff;transform:translate(-50%,-50%);
+  box-shadow:0 2px 8px rgba(0,0,0,.25);background-image:linear-gradient(90deg,transparent 44%,#7A3E6B 44% 48%,transparent 48% 52%,#7A3E6B 52% 56%,transparent 56%)}
+.hero-demo .lbl{position:absolute;top:14px;background:rgba(255,255,255,.9);color:#26203A;border-radius:999px;padding:4px 12px;font-size:.82rem;font-weight:650}
+.hero-demo .lbl.l{left:14px}.hero-demo .lbl.r{right:14px}
+.hero-demo .cap{position:absolute;left:14px;bottom:12px;color:rgba(255,255,255,.92);font-size:.76rem;font-weight:600}
+@media (prefers-reduced-motion: no-preference){
+  @property --pos{syntax:'<percentage>';inherits:true;initial-value:50%}
+  .hero-demo{animation:sweep 3.2s ease-in-out .4s 1 both}
+  @keyframes sweep{0%{--pos:50%}30%{--pos:22%}70%{--pos:78%}100%{--pos:50%}}
+}
+.steps{list-style:none;padding:0;margin:26px 0 0;display:grid;gap:10px}
+.steps li{display:grid;grid-template-columns:36px 1fr;gap:12px;align-items:start;background:var(--surface);border:1px solid var(--line);border-radius:18px;padding:14px}
+.steps b.n{width:36px;height:36px;border-radius:50%;background:var(--plum-bg);color:var(--plum);display:grid;place-items:center;font-size:.95rem}
+.steps h3{margin:2px 0 2px;font-size:1rem}
+.steps p{margin:0;font-size:.92rem;color:var(--ink-soft)}
+.lock-note{display:grid;grid-template-columns:22px 1fr;gap:10px;align-items:start}
+.lock-note svg{width:22px;height:22px;margin-top:1px;color:var(--plum)}
+.week{font-size:.85rem;font-weight:650;color:var(--plum);margin:0 0 6px}
+.empty-art{width:56px;height:56px;border-radius:16px;background:var(--plum-bg);color:var(--plum);display:grid;place-items:center;margin-bottom:10px}
+.empty-art svg{width:28px;height:28px}
 .seg{display:inline-flex;background:var(--surface);border:1.5px solid var(--line);border-radius:999px;padding:4px;gap:4px}
 .seg button{min-height:38px;padding:6px 14px;white-space:nowrap;background:transparent;color:var(--ink-soft);font-weight:600}
 .seg button[aria-pressed="true"]{background:var(--ink);color:var(--paper)}
@@ -80,7 +103,7 @@ button,.btn{font:inherit;cursor:pointer;border:0;border-radius:999px;padding:13p
 .stage .stage-msg{position:absolute;left:12px;right:12px;top:12px;background:rgba(0,0,0,.55);color:#fff;border-radius:12px;padding:8px 12px;font-size:.85rem}
 .range-row{display:flex;align-items:center;gap:12px}
 .range-row input{flex:1;accent-color:var(--plum)}
-.fallback{border:1.5px dashed var(--line);border-radius:var(--radius-lg);padding:22px;text-align:left}
+.fallback{border:1.5px dashed var(--line);border-radius:var(--radius-lg);padding:22px;text-align:left;background:var(--surface)}
 label.field{display:block;font-weight:600;margin-bottom:6px}
 input[type=date],textarea,select{font:inherit;color:var(--ink);background:var(--surface);border:1.5px solid var(--line);border-radius:var(--radius-sm);padding:10px 12px;width:100%}
 textarea{min-height:84px;resize:vertical}
@@ -92,7 +115,7 @@ legend{font-weight:600;margin-bottom:6px;padding:0}
 /* Journal */
 .entry{display:grid;grid-template-columns:96px 1fr;gap:14px;padding:14px 0;border-bottom:1px solid var(--line)}
 .entry:last-child{border-bottom:0}
-.entry img{width:96px;height:128px;object-fit:cover;border-radius:12px;background:var(--line)}
+.entry img{width:96px;height:128px;box-shadow:0 6px 16px -10px rgba(0,0,0,.4);object-fit:cover;border-radius:12px;background:var(--line)}
 .tag{display:inline-block;font-size:.78rem;font-weight:650;border-radius:999px;padding:2px 10px;margin:0 6px 6px 0}
 .tag-amber{background:var(--amber-bg);color:var(--amber)}
 .tag-plum{background:var(--plum-bg);color:var(--plum)}
@@ -196,6 +219,7 @@ function srcFor(e){
   return state.urlCache.get(e.id);
 }
 function forgetUrl(id){ const u=state.urlCache.get(id); if(u){URL.revokeObjectURL(u); state.urlCache.delete(id);} }
+function weekOf(e){ const l=bySide(e.side); if(!l.length) return 1; return Math.floor(daysBetween(l[0].date,e.date)/7)+1; }
 function bySide(side){ return state.entries.filter(e=>e.side===side).sort((a,b)=> a.date===b.date ? a.createdAt-b.createdAt : a.date.localeCompare(b.date)); }
 function toast(msg){ const t=$("#toast"); t.textContent=msg; t.classList.add("show"); clearTimeout(toast._t); toast._t=setTimeout(()=>t.classList.remove("show"),2200); }
 function lsGet(k){ try{return localStorage.getItem(k);}catch{return null;} }
@@ -244,13 +268,23 @@ function photoTips(canvas){
   const c=document.createElement("canvas"); c.width=w; c.height=h;
   const g=c.getContext("2d",{willReadFrequently:true}); g.drawImage(canvas,0,0,w,h);
   const d=g.getImageData(0,0,w,h).data; const L=new Float32Array(w*h);
-  let sum=0, hi=0, lo=0;
-  for (let i=0,p=0;i<d.length;i+=4,p++){ const l=0.2126*d[i]+0.7152*d[i+1]+0.0722*d[i+2]; L[p]=l; sum+=l; if(l>248)hi++; if(l<12)lo++; }
+  let sum=0, hi=0, lo=0, skin=0, paper=0;
+  for (let i=0,p=0;i<d.length;i+=4,p++){
+    const r=d[i], gg=d[i+1], b=d[i+2];
+    const l=0.2126*r+0.7152*gg+0.0722*b; L[p]=l; sum+=l; if(l>248)hi++; if(l<12)lo++;
+    // Rough skin-colour check in YCbCr space (broad range, meant to cover light to deep skin tones)
+    const y=0.299*r+0.587*gg+0.114*b, cb=128-0.168736*r-0.331264*gg+0.5*b, cr=128+0.5*r-0.418688*gg-0.081312*b;
+    if (y>30 && cr>=133 && cr<=180 && cb>=77 && cb<=135) skin++;
+    // Flat white or near-white areas typical of screenshots and documents
+    if (r>230 && gg>230 && b>230 && Math.max(r,gg,b)-Math.min(r,gg,b)<15) paper++;
+  }
   const n=w*h, mean=sum/n;
   let lsum=0, lsq=0, cnt=0;
   for (let y=1;y<h-1;y++) for (let x=1;x<w-1;x++){ const p=y*w+x; const v=4*L[p]-L[p-1]-L[p+1]-L[p-w]-L[p+w]; lsum+=v; lsq+=v*v; cnt++; }
   const lvar=lsq/cnt-(lsum/cnt)**2;
   const tips=[];
+  if (paper/n>0.45) tips.push("This looks like a screenshot or document, not a photo of skin. Journal photos work best as close-ups of your underarm.");
+  else if (skin/n<0.12) tips.push("We couldn't find much skin in this photo. Check it shows your underarm before saving.");
   if (mean<60 || lo/n>0.25) tips.push("This photo looks dark. Face your usual window or turn on the same room light, and avoid flash.");
   if (mean>215 || hi/n>0.12) tips.push("Parts of this photo look washed out. Move out of direct sunlight or away from a bright lamp.");
   if (lvar<25) tips.push("This photo may be blurry. Hold still or rest your phone against something, then retake.");
@@ -310,29 +344,38 @@ function setBanner(){
     ? `<div class="sample-banner" role="note"><span>Sample mode: illustrative images. Nothing here is saved or real.</span><button data-action="exit-sample">Exit sample</button></div>` : "";
 }
 function header(){ return `<div class="topbar"><div class="brand"><span class="brand-mark" aria-hidden="true"></span>Side by Side</div></div>`; }
-const DISCLAIMER = `<footer class="disclaimer">Side by Side is a photo journal, not a medical tool. It doesn't measure pigmentation or tell you whether a product is working. Independent concept built for the Mosaic Fellowship Builder Round; not an official Bodywise app.</footer>`;
+const DISCLAIMER = `<footer class="disclaimer">Side by Side is a photo journal, not a medical tool. It doesn't measure pigmentation or tell you whether a product is working. Independent concept built for the Mosaic Fellowship Builder Round; not an official Be Bodywise app.</footer>`;
 
 function viewHome(){
   const has = !state.sample && state.entries.length>0;
   return `${header()}
-  <div class="hero-mirror" aria-hidden="true"><span class="l">Week 1</span><span class="r">Week 6</span></div>
+  <span class="for-brand"><i aria-hidden="true"></i>For Be Bodywise underarm care</span>
+  <div class="hero-demo" aria-label="Illustration of the compare slider showing week 1 and week 6" role="img">
+    <div class="pane before"></div><div class="pane after"></div><div class="bar"></div>
+    <span class="lbl l">Week 1</span><span class="lbl r">Week 6</span><span class="cap">Illustration</span>
+  </div>
   <h1>See your underarm care progress side by side</h1>
-  <p class="muted">Slow changes are hard to judge from memory. Take photos the same way each time, then compare any two dates with your own eyes.</p>
+  <p class="muted">Using the Be Bodywise underarm roll-on for pigmentation? Results build slowly, which makes them hard to judge from memory. Take photos the same way each time, then compare any two dates with your own eyes.</p>
   <div class="stack" style="margin-top:20px">
     ${has
       ? `<a class="btn btn-primary btn-block" href="#/capture">Take today's photo</a><a class="btn btn-quiet btn-block" href="#/compare">Compare my photos</a>`
       : `<button class="btn-primary btn-block" data-action="start-journal">Start my journal</button><button class="btn-quiet btn-block" data-action="start-sample">Try with sample photos</button>`}
   </div>
-  <div class="note note-plum" style="margin-top:18px">Your photos stay on this device. Nothing is uploaded, and you can delete them anytime.</div>
+  ${has ? `<p style="margin-top:10px"><button class="btn-link" data-action="start-sample">Try with sample photos</button></p>`:""}
+  <ol class="steps" aria-label="How it works">
+    <li><b class="n">1</b><div><h3>Take a guided photo</h3><p>A faint copy of your last photo helps you match the pose and light.</p></div></li>
+    <li><b class="n">2</b><div><h3>Repeat about once a week</h3><p>Add an optional note if you felt itching or paused use.</p></div></li>
+    <li><b class="n">3</b><div><h3>Compare any two dates</h3><p>Side by side or with a slider, instead of relying on memory.</p></div></li>
+  </ol>
+  <div class="note note-plum lock-note" style="margin-top:14px"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><rect x="5" y="10" width="14" height="10" rx="2"/><path d="M8 10V7a4 4 0 0 1 8 0v3"/></svg><span>Your photos stay on this device. Nothing is uploaded, and you can delete them anytime.</span></div>
   ${state.dbError ? `<div class="note note-amber" style="margin-top:12px">${esc(state.dbError)}</div>`:""}
-  ${has ? `<p style="margin-top:14px"><button class="btn-link" data-action="start-sample">Try with sample photos</button></p>`:""}
   ${DISCLAIMER}`;
 }
 
 function viewSetup(){
   return `${header()}
   <h2>Set up once, so your photos are comparable</h2>
-  <p class="muted">Changes in light and angle can look like changes in skin. These habits keep each photo as similar as possible.</p>
+  <p class="muted">Keep using your Be Bodywise product as directed on the pack. These habits just keep each photo as similar as possible, because changes in light and angle can look like changes in skin.</p>
   <div class="panel">
     <ul class="tips">
       <li><strong>Same spot, same light.</strong> Stand facing the same window or under the same room light every time. Avoid flash.</li>
@@ -414,14 +457,14 @@ function viewJournal(){
   const tabs=`<div class="seg" role="group" aria-label="Which side" style="margin-bottom:14px">${["left","right"].map(s=>`<button data-action="side" data-side="${s}" aria-pressed="${state.side===s}">${SIDES[s]}</button>`).join("")}</div>`;
   if (state.dbError && !state.sample) return `${header()}<h2>Journal</h2><div class="note note-amber">${esc(state.dbError)}</div>`;
   if (!list.length) return `${header()}<h2>Journal</h2>${tabs}
-    <div class="fallback"><h3>No photos for this side yet</h3><p class="muted small">Your first photo becomes the guide for every photo after it.</p>
+    <div class="fallback"><div class="empty-art" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M4 8h3l2-3h6l2 3h3v11H4z"/><circle cx="12" cy="13" r="3.5"/></svg></div><h3>No photos for this side yet</h3><p class="muted small">Your first photo becomes the guide for every photo after it.</p>
     ${state.sample?"":`<a class="btn btn-primary" href="#/capture">Take a photo</a>`}</div>`;
   return `${header()}<h2>Journal</h2>${tabs}${itchNotice(bySide(state.side))}
   <div class="panel" style="padding:4px 16px">
   ${list.map(e=>`<div class="entry">
       <img src="${srcFor(e)}" alt="${SIDES[e.side]} photo from ${fmtDate(e.date)}">
       <div>
-        <h3>${fmtDate(e.date)}</h3>
+        <p class="week">Week ${weekOf(e)}</p><h3>${fmtDate(e.date)}</h3>
         ${e.itch?`<span class="tag tag-amber">Itching noted</span>`:""}${e.paused?`<span class="tag tag-plum">Paused use</span>`:""}
         ${e.note?`<p class="small">${esc(e.note)}</p>`:""}
         <div class="actions">
@@ -436,7 +479,7 @@ function viewCompare(){
   const list=bySide(state.side);
   const tabs=`<div class="seg" role="group" aria-label="Which side" style="margin-bottom:14px">${["left","right"].map(s=>`<button data-action="side" data-side="${s}" aria-pressed="${state.side===s}">${SIDES[s]}</button>`).join("")}</div>`;
   if (list.length<2) return `${header()}<h2>Compare</h2>${tabs}
-    <div class="fallback"><h3>You need two photos of this side to compare</h3><p class="muted small">You have ${list.length}. Come back after your next photo, ideally a week or more later.</p>
+    <div class="fallback"><div class="empty-art" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><rect x="3" y="5" width="18" height="14" rx="3"/><path d="M12 3v18"/></svg></div><h3>You need two photos of this side to compare</h3><p class="muted small">You have ${list.length}. Come back after your next photo, ideally a week or more later.</p>
     ${state.sample?"":`<a class="btn btn-primary" href="#/capture">Take a photo</a>`}
     ${state.sample?"":`<p style="margin-top:10px"><button class="btn-link" data-action="start-sample">Or try with sample photos</button></p>`}</div>`;
   const ids=list.map(e=>e.id);
@@ -445,7 +488,7 @@ function viewCompare(){
   let A=list.find(e=>e.id===state.compareA), B=list.find(e=>e.id===state.compareB);
   if (A.date>B.date) [A,B]=[B,A];
   const opts=(sel)=>list.map(e=>`<option value="${e.id}" ${e.id===sel?"selected":""}>${fmtDate(e.date)}</option>`).join("");
-  const cap=(e)=>`${fmtDate(e.date)}${e.itch?" · itching noted":""}${e.paused?" · paused use":""}`;
+  const cap=(e)=>`Week ${weekOf(e)} · ${fmtDate(e.date)}${e.itch?" · itching noted":""}${e.paused?" · paused use":""}`;
   const body = state.compareMode==="side"
     ? `<div class="pair">
         <figure><img src="${srcFor(A)}" alt="Earlier photo, ${fmtDate(A.date)}"><figcaption>${esc(cap(A))}${A.note?`<br><span class="muted">${esc(A.note)}</span>`:""}</figcaption></figure>
@@ -455,7 +498,7 @@ function viewCompare(){
         <img src="${srcFor(B)}" alt="Later photo, ${fmtDate(B.date)}">
         <img class="top" src="${srcFor(A)}" alt="Earlier photo, ${fmtDate(A.date)}">
         <div class="handle" aria-hidden="true"></div>
-        <span class="chip a">${fmtDate(A.date)}</span><span class="chip b">${fmtDate(B.date)}</span>
+        <span class="chip a">Week ${weekOf(A)}</span><span class="chip b">Week ${weekOf(B)}</span>
       </div>
       <div class="range-row" style="margin-top:10px"><input id="slide" type="range" min="0" max="100" value="50" aria-label="Move the divider between the earlier and later photo"></div>`;
   return `${header()}<h2>Compare</h2>${tabs}
